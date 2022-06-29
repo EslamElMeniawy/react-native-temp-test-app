@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Added for 'notification' -->
+    <!-- TODO: Replace with color for notification icon -->
+    <color name="notification">#6750a4</color>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyApp</string>
+
+    <!-- Added for 'notification' -->
+    <!-- TODO: Replace with default notification channel id. -->
+    <string name="default_notification_channel_id">default_notification_channel_id</string>
+</resources>
