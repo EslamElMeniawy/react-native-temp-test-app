@@ -59,3 +59,7 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+# Firebase
+google-services.json
+GoogleService-Info.plist
