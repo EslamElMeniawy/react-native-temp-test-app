@@ -7,6 +7,7 @@ import Config from 'react-native-config';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import {useDispatch, useSelector} from 'react-redux';
+import {getApplicationName} from 'react-native-device-info';
 
 import AppColors from './enums/AppColors';
 import {
@@ -38,9 +39,10 @@ export default () => {
 
   // Log initialization.
   React.useEffect(() => {
+    const appName = getApplicationName();
+
     configureLog({
-      // TODO: Replace with app name.
-      appName: 'MyApp',
+      appName: appName,
       firebaseLogLevels:
         Config.ENABLE_FIREBASE_LOG === 'true'
           ? ['LOG', 'WARN', 'ERROR']
