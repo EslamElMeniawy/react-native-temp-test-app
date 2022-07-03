@@ -3,6 +3,7 @@ import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {useDispatch, useSelector} from 'react-redux';
 import {FirebaseMessagingTypes} from '@react-native-firebase/messaging';
+import {getBundleId} from 'react-native-device-info';
 
 import Notification from '../types/api/Notification';
 import {RootState} from '../store';
@@ -16,11 +17,9 @@ const getLogMessage = (message: string) => {
   return `## NotificationUtils: ${message}`;
 };
 
-// TODO: Replace with default notification channel id.
-export const defaultChannelId: string = 'default_notification_channel';
-
-// TODO: Replace with local notification channel id.
-export const localChannelId: string = 'local_notification_channel';
+const packageName: string = getBundleId();
+export const defaultChannelId: string = `${packageName}.default_notification_channel`;
+export const localChannelId: string = `${packageName}.local_notification_channel`;
 
 export const processNotification = (notification: Notification) => {
   console.info(getLogMessage('processNotification'), notification);

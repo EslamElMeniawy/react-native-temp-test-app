@@ -20,7 +20,7 @@
       tools:replace="android:resource" />
     <meta-data
       android:name="com.google.firebase.messaging.default_notification_channel_id"
-      android:value="@string/default_notification_channel_id"
+      android:value="${applicationId}.default_notification_channel"
       tools:replace="android:value" />
     <meta-data
       android:name="com.dieam.reactnativepushnotification.notification_color"

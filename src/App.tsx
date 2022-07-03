@@ -135,7 +135,7 @@ export default () => {
         channelName: translate('app_name'),
         soundName: 'default',
       },
-      created => console.info(getLogMessage('created'), created),
+      created => console.info(getLogMessage('created'), channelId, created),
     );
   };
 
