@@ -2,13 +2,18 @@ import React from 'react';
 import {ScaledSheet} from 'react-native-size-matters';
 import {Text, Button} from 'roqay-react-native-common-components';
 import Config from 'react-native-config';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {setErrorDialogMessage} from '../store/errorDialogMessage';
+import {RootState} from '../store';
 
 export default () => {
   // TODO: Design splash.
   const dispatch = useDispatch();
+
+  const {isInternetAvailable, isConnectionExpensive} = useSelector(
+    (state: RootState) => state.networkState,
+  );
 
   return (
     <>
@@ -22,6 +27,12 @@ export default () => {
         onPress={() => dispatch(setErrorDialogMessage('Some error happened!'))}
         textProps={{style: styles.buttonText}}
       />
+      <Text style={styles.content}>
+        {`Internet Available: ${isInternetAvailable}`}
+      </Text>
+      <Text style={styles.content}>
+        {`Connection Expensive: ${isConnectionExpensive}`}
+      </Text>
     </>
   );
 };

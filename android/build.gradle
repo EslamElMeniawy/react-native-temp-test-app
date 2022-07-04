@@ -19,6 +19,9 @@ buildscript {
 
         // Added to fix build issue related to ReactNative 0.69.0 and react-native-screens
         kotlinVersion = "1.6.10"
+
+        // Added for '@react-native-community/netinfo'
+        androidXCore = "1.8.0"
     }
     
     repositories {

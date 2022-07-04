@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {AppState, NativeModules, Platform, View} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {ScaledSheet} from 'react-native-size-matters';
 import {configureLog} from 'roqay-react-native-common-components';
@@ -8,6 +8,7 @@ import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import {useDispatch, useSelector} from 'react-redux';
 import {getApplicationName} from 'react-native-device-info';
+import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 
 import AppColors from './enums/AppColors';
 import {
@@ -21,9 +22,15 @@ import {setI18nConfig, translate} from './core';
 import {RootState} from './store';
 import {setNotificationsCount} from './store/notificationsCount';
 import Notification from './types/api/Notification';
+import {
+  setIsInternetAvailable,
+  setIsConnectionExpensive,
+  removeIsConnectionExpensive,
+} from './store/networkState';
 
 import NavigationContainer from './navigation/NavigationContainer';
 import ErrorDialog from './components/ErrorDialog';
+import Toast from './components/Toast';
 
 const getLogMessage = (message: string) => {
   return `## App: ${message}`;
@@ -36,6 +43,8 @@ export default () => {
   const {notificationsCount} = useSelector(
     (state: RootState) => state.notificationsCount,
   );
+
+  let internetLostToastId: string | undefined = undefined;
 
   // Log initialization.
   React.useEffect(() => {
@@ -55,6 +64,95 @@ export default () => {
   React.useEffect(() => {
     setI18nConfig();
   }, []);
+
+  // Add listener for network state change.
+  React.useEffect(() => {
+    const subAppState = AppState.addEventListener(
+      'change',
+      async nextAppState => {
+        console.info(getLogMessage('App state changed'));
+        console.info(getLogMessage('nextAppState'), nextAppState);
+
+        if (Platform.OS == 'ios' && nextAppState == 'active') {
+          const newNetInfo = await NativeModules.RNCNetInfo.getCurrentState(
+            'wifi',
+          );
+
+          console.info(getLogMessage('newNetInfo'), newNetInfo);
+
+          NetInfo.fetch().then(state => {
+            console.info(getLogMessage('state'), state);
+            handleNetworkState(state);
+          });
+        }
+      },
+    );
+
+    const unsubscribeNetState = NetInfo.addEventListener(state => {
+      console.info(getLogMessage('Network state changed'));
+      console.info(getLogMessage('state'), state);
+      handleNetworkState(state);
+    });
+
+    return () => {
+      if (subAppState) {
+        subAppState.remove();
+      }
+
+      unsubscribeNetState();
+    };
+  }, []);
+
+  /**
+   * handleNetworkState
+   *
+   * Save network state to redux store.
+   * Check if not internet then show connection lost toast.
+   *
+   * @param state The new network state to handle.
+   */
+  const handleNetworkState = (state: NetInfoState) => {
+    console.info(getLogMessage('handleNetworkState'));
+    console.info(getLogMessage('state'), state);
+
+    // Check Internet available state.
+    const isInternetAvailable =
+      (state.isConnected || false) && (state.isInternetReachable || false);
+
+    console.info(getLogMessage('isInternetAvailable'), isInternetAvailable);
+    dispatch(setIsInternetAvailable(isInternetAvailable));
+
+    // Check connection expensive state.
+    const isConnectionExpensive = state.details?.isConnectionExpensive;
+    console.info(getLogMessage('isConnectionExpensive'), isConnectionExpensive);
+
+    if (isConnectionExpensive == undefined) {
+      dispatch(removeIsConnectionExpensive());
+    } else {
+      dispatch(setIsConnectionExpensive(isConnectionExpensive));
+    }
+
+    // Show internet lost toast if no Internet connection available.
+    console.info(getLogMessage('internetLostToastId'), internetLostToastId);
+
+    if (!isInternetAvailable) {
+      if (internetLostToastId) {
+        toast?.update(internetLostToastId, translate('internet_lost'), {
+          type: 'danger',
+          onClose: () => (internetLostToastId = undefined),
+        });
+      } else {
+        internetLostToastId = toast?.show(translate('internet_lost'), {
+          type: 'danger',
+          onClose: () => (internetLostToastId = undefined),
+        });
+      }
+    } else {
+      if (internetLostToastId) {
+        toast?.hide(internetLostToastId);
+      }
+    }
+  };
 
   // Firebase messaging initialization.
   React.useEffect(() => {
@@ -199,6 +297,7 @@ export default () => {
       <PaperProvider theme={paperTheme}>
         <NavigationContainer />
         <ErrorDialog />
+        <Toast reference={ref => (global['toast'] = ref)} />
       </PaperProvider>
     </View>
   );

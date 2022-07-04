@@ -348,6 +348,8 @@ PODS:
   - react-native-mmkv-storage (0.7.6):
     - MMKV (= 1.2.10)
     - React-Core
+  - react-native-netinfo (9.3.0):
+    - React-Core
   - react-native-restart (0.0.24):
     - React-Core
   - react-native-safe-area-context (4.3.1):
@@ -492,6 +494,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-mmkv-storage (from `../node_modules/react-native-mmkv-storage`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -591,6 +594,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-config"
   react-native-mmkv-storage:
     :path: "../node_modules/react-native-mmkv-storage"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-restart:
     :path: "../node_modules/react-native-restart"
   react-native-safe-area-context:
@@ -689,6 +694,7 @@ SPEC CHECKSUMS:
   React-logger: ca970551cb7eea2fd814d0d5f6fc1a471eb53b76
   react-native-config: 7cd105e71d903104e8919261480858940a6b9c0e
   react-native-mmkv-storage: ba38e5e813ea3d5d37af834a9d867b1ce10aa96d
+  react-native-netinfo: 129bd99f607a2dc5bb096168f3e5c150fd1f1c95
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 6c12e3859b6f27b25de4fee8201cfb858432d8de
   React-perflogger: c9161ff0f1c769993cd11d2751e4331ff4ceb7cd
@@ -719,6 +725,6 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   Yoga: 7ab6e3ee4ce47d7b789d1cb520163833e515f452
 
-PODFILE CHECKSUM: e3684ff5c65ad2108238553757dd9d5c3018f2da
+PODFILE CHECKSUM: d5a2ec28ec1eeb298b2ca9a6dd3618890798db2f
 
 COCOAPODS: 1.11.3

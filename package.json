@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@klarna/react-native-vector-drawable": "^0.3.0",
+    "@react-native-community/netinfo": "^9.3.0",
     "@react-native-community/push-notification-ios": "^1.10.1",
     "@react-native-firebase/analytics": "^15.1.1",
     "@react-native-firebase/app": "^15.1.1",
@@ -70,6 +71,7 @@
     "react-native-screens": "^3.13.1",
     "react-native-size-matters": "^0.4.0",
     "react-native-svg": "^12.3.0",
+    "react-native-toast-notifications": "^3.3.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-vector-image": "^0.3.3",
     "react-redux": "^8.0.2",
