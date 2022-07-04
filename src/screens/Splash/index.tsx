@@ -21,6 +21,11 @@ const getLogMessage = (message: string) => {
 export default (props: RootStackScreenProps<'Splash'>) => {
   const dispatch = useDispatch();
   const {user: stateUser} = useSelector((state: RootState) => state.user);
+
+  const {isInternetAvailable} = useSelector(
+    (state: RootState) => state.networkState,
+  );
+
   const [isLanguageLoaded, setLanguageLoaded] = React.useState<boolean>(false);
   const [isUserLoaded, setUserLoaded] = React.useState<boolean>(false);
 
@@ -48,9 +53,10 @@ export default (props: RootStackScreenProps<'Splash'>) => {
      * Load user data from local storage then:
      * - If user available:
      *   - Set user to redux store.
-     *   - Call "getUpdatedUserData" to load updated user data from API.
+     *   - Check if Internet connection available then:
+     *     - If available call "getUpdatedUserData" to load updated user data from API.
+     *     - Else set "isUserLoaded" state variable.
      * - Else:
-     *   - Set user to redux store.
      *   - Set "isUserLoaded" state variable.
      */
     const getSavedUser = async () => {
@@ -60,7 +66,12 @@ export default (props: RootStackScreenProps<'Splash'>) => {
 
       if (user) {
         setUserToReduxStore(user);
-        getUpdatedUserData();
+
+        if (isInternetAvailable) {
+          getUpdatedUserData();
+        } else {
+          setUserLoaded(true);
+        }
       } else {
         setUserLoaded(true);
       }
