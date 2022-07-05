@@ -102,7 +102,7 @@ project.ext.react = [
 
 apply from: "../../node_modules/react-native/react.gradle"
 
-// Added for "react-native-vector-image"
+// Added for 'react-native-vector-image'
 apply from: "../../node_modules/react-native-vector-image/strip_svgs.gradle"
 
 /**
