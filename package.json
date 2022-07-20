@@ -19,7 +19,7 @@
     "bundle:dev": "cd android && ./gradlew bundleDevelopment && cd ..",
     "bundle:staging": "cd android && ./gradlew bundleStaging && cd ..",
     "bundle:prod": "cd android && ./gradlew bundleProduction && cd ..",
-    "ios-clean": "cd ios && rm -R build && xcodebuild clean && cd ..",
+    "ios-clean": "cd ios && rm -rf build && xcodebuild clean && cd ..",
     "ios:dev": "react-native run-ios --simulator=\"iPhone 13 Pro Max\" --scheme \"Debug\"",
     "ios:dev-small": "react-native run-ios --simulator=\"iPhone 8 Plus\" --scheme \"Debug\"",
     "ios:dev-ipad": "react-native run-ios --simulator=\"iPad Pro (12.9-inch) (5th generation)\" --scheme \"Debug\"",
