@@ -4,6 +4,8 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
 
+production = ENV["PRODUCTION"] == "1"
+
 # Added for "Firebase"
 $RNFirebaseAnalyticsWithoutAdIdSupport = true
 $RNFirebaseAsStaticFramework = true
@@ -19,9 +21,13 @@ target 'MyApp' do
 
   use_react_native!(
     :path => config[:reactNativePath],
+    :production => production,
     # to enable hermes on iOS, change `false` to `true` and then install pods
-    :hermes_enabled => true,
+    :hermes_enabled => flags[:hermes_enabled],
     :fabric_enabled => flags[:fabric_enabled],
+    # Default value is "FlipperConfiguration.enabled"
+    # but changed here for "use_frameworks" to work
+    :flipper_configuration => FlipperConfiguration.disabled,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
