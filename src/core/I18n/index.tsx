@@ -1,5 +1,5 @@
 import {Platform, NativeModules, I18nManager} from 'react-native';
-import I18n from 'i18n-js';
+import {I18n} from 'i18n-js';
 import * as RNLocalize from 'react-native-localize';
 import RNRestart from 'react-native-restart';
 import memoize from 'lodash.memoize';
@@ -14,6 +14,8 @@ const translationGetters = {
   ar: () => require('../../translations/ar.json'),
   en: () => require('../../translations/en.json'),
 };
+
+const i18n = new I18n();
 
 // Get device language.
 const deviceLanguage =
@@ -32,29 +34,29 @@ export const setI18nConfig = () => {
   const locales = RNLocalize.getLocales();
 
   if (Array.isArray(locales)) {
-    I18n.locale = locales[0].languageTag;
+    i18n.locale = locales[0].languageTag;
   }
 
   // If an English translation is not available in en.js, it will look inside ar.js
-  I18n.fallbacks = true;
+  i18n.enableFallback = true;
 
   // It will convert HOME_noteTitle to "HOME note title"
   // if the value of HOME_noteTitle doesn't exist in any of the translation files.
-  I18n.missingBehaviour = 'guess';
+  i18n.missingBehavior = 'guess';
 
   // Clear translation cache.
   translate?.cache?.clear?.();
 
   // If the current locale in device is not en or ar.
-  I18n.defaultLocale = defaultLocale;
+  i18n.defaultLocale = defaultLocale;
 
   // Set the locale.
-  I18n.locale = defaultLocale;
+  i18n.locale = defaultLocale;
   I18nManager.allowRTL(defaultLocale === AppLanguages.ARABIC);
   I18nManager.forceRTL(defaultLocale === AppLanguages.ARABIC);
 
   // Define the supported translations.
-  I18n.translations = {
+  i18n.translations = {
     [AppLanguages.ARABIC]: translationGetters.ar(),
     [AppLanguages.ENGLISH]: translationGetters.en(),
   };
@@ -68,7 +70,7 @@ export const updateLanguage = (language?: AppLanguages | null) => {
   translate?.cache?.clear?.();
 
   // Set the locale.
-  I18n.locale = locale;
+  i18n.locale = locale;
   I18nManager.allowRTL(locale === AppLanguages.ARABIC);
   I18nManager.forceRTL(locale === AppLanguages.ARABIC);
 
@@ -81,9 +83,9 @@ export const updateLanguage = (language?: AppLanguages | null) => {
   }
 };
 
-export const getCurrentLocale = () => I18n.locale;
+export const getCurrentLocale = () => i18n.locale;
 
 export const translate = memoize(
-  key => I18n.t(key),
+  key => i18n.t(key),
   key => key,
 );
