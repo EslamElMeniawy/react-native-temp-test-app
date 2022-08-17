@@ -12,8 +12,7 @@ import {
 import User from '../../types/api/User';
 import {RootStackScreenProps, RootStackParamList} from '../../types/navigation';
 
-import Screen from '../../components/Screen';
-import Splash from '../../components/Splash';
+import {Screen, Splash} from '../../components';
 
 const getLogMessage = (message: string) => {
   return `## Splash Screen: ${message}`;
@@ -31,7 +30,7 @@ export default (props: RootStackScreenProps<'Splash'>) => {
   const [isUserLoaded, setUserLoaded] = React.useState<boolean>(false);
 
   // TODO: Move this code to next screen after splash.
-  // TODO: Or keep it here if have different splash design. 
+  // TODO: Or keep it here if have different splash design.
   // Check if splash is displaying then hide it.
   React.useEffect(() => {
     RNBootSplash.getVisibilityStatus()

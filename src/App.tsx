@@ -29,8 +29,7 @@ import {
 } from './store/networkState';
 
 import NavigationContainer from './navigation/NavigationContainer';
-import ErrorDialog from './components/ErrorDialog';
-import Toast from './components/Toast';
+import {ErrorDialog, Toast} from './components';
 
 const getLogMessage = (message: string) => {
   return `## App: ${message}`;
