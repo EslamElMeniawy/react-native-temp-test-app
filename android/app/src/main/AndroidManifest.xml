@@ -14,7 +14,10 @@
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
-      android:theme="@style/BootTheme">
+      android:dataExtractionRules="@xml/data_extraction_rules"
+      android:fullBackupContent="false"
+      android:theme="@style/BootTheme"
+      tools:ignore="UnusedAttribute">
       <!-- Meta for 'notifications' -->
       <!-- TODO: Add notifications icon first -->
       <!-- <meta-data
