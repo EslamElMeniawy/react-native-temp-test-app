@@ -8,6 +8,10 @@ import com.facebook.react.ReactRootView;
 // Added for 'splash screen'.
 import com.zoontek.rnbootsplash.RNBootSplash;
 
+// Added for 'react-native-orientation-locker'.
+import android.content.Intent;
+import android.content.res.Configuration;
+
 public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +20,15 @@ public class MainActivity extends ReactActivity {
 
     // Passed null for 'react-native-screens'.
     super.onCreate(null);
+  }
+
+  // Added for 'react-native-orientation-locker'.
+  @Override
+  public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+    Intent intent = new Intent("onConfigurationChanged");
+    intent.putExtra("newConfig", newConfig);
+    this.sendBroadcast(intent);
   }
 
   /**

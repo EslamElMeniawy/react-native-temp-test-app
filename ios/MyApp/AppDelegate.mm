@@ -17,6 +17,9 @@
 // Imports for splash screen.
 #import "RNBootSplash.h"
 
+// Imports for 'react-native-orientation-locker'.
+#import "Orientation.h"
+
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
 #import <React/RCTCxxBridgeDelegate.h>
@@ -112,6 +115,11 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 #endif
   
   return initProps;
+}
+
+// Added for 'react-native-orientation-locker'.
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  return [Orientation getOrientation];
 }
 
 //Called when a notification is delivered to a foreground app.
