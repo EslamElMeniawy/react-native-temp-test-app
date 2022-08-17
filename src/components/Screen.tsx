@@ -1,5 +1,5 @@
 import React from 'react';
-import {StatusBar, StatusBarProps} from 'react-native';
+import {StatusBar, StatusBarProps, StyleProp, ViewStyle} from 'react-native';
 import {Edge, SafeAreaView} from 'react-native-safe-area-context';
 import {ScaledSheet} from 'react-native-size-matters';
 import tinyColor from 'tinycolor2';
@@ -10,10 +10,11 @@ interface Props {
   edges?: Edge[];
   statusBarProps?: StatusBarProps;
   children?: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
 export default (props: Props) => {
-  const {edges, statusBarProps, children} = props;
+  const {edges, statusBarProps, children, style} = props;
 
   const {backgroundColor, barStyle, ...restStatusBarProps} =
     statusBarProps || {};
@@ -21,7 +22,7 @@ export default (props: Props) => {
   const statusBarBackgroundColor = backgroundColor || AppColors.BACKGROUND;
 
   return (
-    <SafeAreaView style={styles.container} edges={edges}>
+    <SafeAreaView style={[styles.container, style]} edges={edges}>
       <StatusBar
         backgroundColor={statusBarBackgroundColor}
         barStyle={
