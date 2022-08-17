@@ -1,8 +1,9 @@
 import {DefaultTheme} from 'react-native-paper';
+import {Theme} from 'react-native-paper/lib/typescript/types';
 
 import AppColors from '../enums/AppColors';
 
-export const paperTheme = {
+export const paperTheme: Theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
