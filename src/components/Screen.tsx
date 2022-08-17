@@ -1,5 +1,5 @@
 import React from 'react';
-import {StatusBar, StatusBarProps, View} from 'react-native';
+import {StatusBar, StatusBarProps} from 'react-native';
 import {Edge, SafeAreaView} from 'react-native-safe-area-context';
 import {ScaledSheet} from 'react-native-size-matters';
 import tinyColor from 'tinycolor2';
