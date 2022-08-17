@@ -3,4 +3,7 @@
     <!-- Added for 'notification' -->
     <!-- TODO: Replace with color for notification icon -->
     <color name="notification">#6750a4</color>
+
+    <!-- Added for 'splash screen' -->
+    <color name="bootsplash_background">#FFFBFE</color>
 </resources>

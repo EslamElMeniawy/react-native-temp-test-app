@@ -1,5 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import RNBootSplash from 'react-native-bootsplash';
 
 import {RootState} from '../../store';
 import {setUser as setStateUser} from '../../store/user';
@@ -28,6 +29,26 @@ export default (props: RootStackScreenProps<'Splash'>) => {
 
   const [isLanguageLoaded, setLanguageLoaded] = React.useState<boolean>(false);
   const [isUserLoaded, setUserLoaded] = React.useState<boolean>(false);
+
+  // TODO: Move this code to next screen after splash.
+  // TODO: Or keep it here if have different splash design. 
+  // Check if splash is displaying then hide it.
+  React.useEffect(() => {
+    RNBootSplash.getVisibilityStatus()
+      .then(status => {
+        console.info(getLogMessage('status'), status);
+
+        if (status === 'visible') {
+          RNBootSplash.hide({fade: true});
+        }
+      })
+      .catch(error =>
+        console.warn(
+          getLogMessage('Error executing "RNBootSplash.getVisibilityStatus"'),
+          error,
+        ),
+      );
+  }, []);
 
   React.useEffect(() => {
     /**

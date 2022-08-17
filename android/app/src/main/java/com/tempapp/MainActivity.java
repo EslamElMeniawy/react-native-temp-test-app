@@ -5,9 +5,16 @@ import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 
+// Added for 'splash screen'.
+import com.zoontek.rnbootsplash.RNBootSplash;
+
 public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    // Added for 'splash screen'.
+    RNBootSplash.init(this);
+
+    // Passed null for 'react-native-screens'.
     super.onCreate(null);
   }
 

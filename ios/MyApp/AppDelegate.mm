@@ -14,6 +14,9 @@
 // Import for injecting headless check in application.
 #import "RNFBMessagingModule.h"
 
+// Imports for splash screen.
+#import "RNBootSplash.h"
+
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
 #import <React/RCTCxxBridgeDelegate.h>
@@ -79,10 +82,8 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   
-  // Keep splash open while loading js app.
-  UIStoryboard *sb = [UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil];
-  UIViewController *vc = [sb instantiateInitialViewController];
-  rootView.loadingView = vc.view;
+  // Initialize splash screen.
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
   
   // Define UNUserNotificationCenter
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
