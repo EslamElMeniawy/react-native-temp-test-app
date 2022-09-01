@@ -115,11 +115,14 @@ export default () => {
     console.info(getLogMessage('state'), state);
 
     // Check Internet available state.
-    const isInternetAvailable =
-      (state.isConnected || false) && (state.isInternetReachable || false);
-
+    const isInternetAvailable = state.isConnected && state.isInternetReachable;
     console.info(getLogMessage('isInternetAvailable'), isInternetAvailable);
-    dispatch(setIsInternetAvailable(isInternetAvailable));
+
+    dispatch(
+      setIsInternetAvailable(
+        isInternetAvailable == null ? true : isInternetAvailable,
+      ),
+    );
 
     // Check connection expensive state.
     const isConnectionExpensive = state.details?.isConnectionExpensive;
@@ -134,7 +137,7 @@ export default () => {
     // Show internet lost toast if no Internet connection available.
     console.info(getLogMessage('internetLostToastId'), internetLostToastId);
 
-    if (!isInternetAvailable) {
+    if (isInternetAvailable === false) {
       if (internetLostToastId) {
         toast?.update(internetLostToastId, translate('internet_lost'), {
           type: 'danger',
