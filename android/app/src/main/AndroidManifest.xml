@@ -17,6 +17,7 @@
       android:dataExtractionRules="@xml/data_extraction_rules"
       android:fullBackupContent="false"
       android:theme="@style/BootTheme"
+      android:supportsRtl="true"
       tools:ignore="UnusedAttribute">
       <!-- Meta for 'notifications' -->
       <!-- TODO: Add notifications icon first -->
