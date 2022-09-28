@@ -5,13 +5,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {FirebaseMessagingTypes} from '@react-native-firebase/messaging';
 import {getBundleId} from 'react-native-device-info';
 
-import Notification from '../types/api/Notification';
-import {RootState} from '../store';
+import {Notification} from '../types';
 import {
+  RootState,
   setNotificationsCount,
   removeNotificationsCount,
-} from '../store/notificationsCount';
-import AppColors from '../enums/AppColors';
+} from '../store';
+import {AppColors} from '../enums';
 
 const getLogMessage = (message: string) => {
   return `## NotificationUtils: ${message}`;

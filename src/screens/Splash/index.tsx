@@ -2,33 +2,38 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import RNBootSplash from 'react-native-bootsplash';
 
-import {RootState} from '../../store';
-import {setUser as setStateUser} from '../../store/user';
+import {RootState, setUser as setStateUser} from '../../store';
 import {
   getLanguage,
   updateLanguage,
   getUser as getLocalStorageUser,
 } from '../../core';
-import User from '../../types/api/User';
-import {RootStackScreenProps, RootStackParamList} from '../../types/navigation';
+import {RootStackScreenProps, RootStackParamList, User} from '../../types';
 
 import {Screen, Splash} from '../../components';
 
-const getLogMessage = (message: string) => {
-  return `## Splash Screen: ${message}`;
-};
+export default React.memo((props: RootStackScreenProps<'Splash'>) => {
+  // #region Logger
+  const getLogMessage = (message: string) => {
+    return `## Splash Screen: ${message}`;
+  };
+  // #endregion
 
-export default (props: RootStackScreenProps<'Splash'>) => {
+  // #region Redux
   const dispatch = useDispatch();
   const {user: stateUser} = useSelector((state: RootState) => state.user);
 
   const {isInternetAvailable} = useSelector(
     (state: RootState) => state.networkState,
   );
+  // #endregion
 
+  // #region State
   const [isLanguageLoaded, setLanguageLoaded] = React.useState<boolean>(false);
   const [isUserLoaded, setUserLoaded] = React.useState<boolean>(false);
+  // #endregion
 
+  // #region Setup
   // TODO: Move this code to next screen after splash.
   // TODO: Or keep it here if have different splash design.
   // Check if splash is displaying then hide it.
@@ -148,10 +153,13 @@ export default (props: RootStackScreenProps<'Splash'>) => {
     const {navigation} = props;
     navigation.navigate(screenName, params);
   };
+  // #endregion
 
+  // #region UI
   return (
     <Screen>
       <Splash />
     </Screen>
   );
-};
+  // #endregion
+});

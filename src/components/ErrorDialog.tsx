@@ -2,19 +2,23 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AlertDialog} from 'roqay-react-native-common-components';
 
-import {RootState} from '../store';
-import {removeErrorDialogMessage} from '../store/errorDialogMessage';
-import {removeUser} from '../store/user';
-import {removeNotificationsCount} from '../store/notificationsCount';
+import {
+  RootState,
+  removeErrorDialogMessage,
+  removeUser,
+  removeNotificationsCount,
+} from '../store';
 import {translate} from '../core';
-import {popToTop, replace} from '../utils';
+import {popToTop, replace} from '../navigation';
 
-export default () => {
+export default React.memo(() => {
+  // #region Redux
   const dispatch = useDispatch();
 
   const {errorDialogMessage} = useSelector(
     (state: RootState) => state.errorDialogMessage,
   );
+  // #endregion
 
   const onDismiss = () => {
     // Check if session expired then:
@@ -34,8 +38,11 @@ export default () => {
   return (
     <AlertDialog
       message={errorDialogMessage}
-      dialogProps={{visible: Boolean(errorDialogMessage), onDismiss: onDismiss}}
+      dialogProps={{
+        visible: Boolean(errorDialogMessage),
+        onDismiss: onDismiss,
+      }}
       actions={[{action: translate('ok'), actionProps: {onPress: onDismiss}}]}
     />
   );
-};
+});

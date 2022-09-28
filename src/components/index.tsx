@@ -1,6 +1,4 @@
-import ErrorDialog from './ErrorDialog';
-import Screen from './Screen';
-import Splash from './Splash';
-import Toast from './Toast';
-
-export {ErrorDialog, Screen, Splash, Toast};
+export {default as ErrorDialog} from './ErrorDialog';
+export {default as Screen} from './Screen';
+export {default as Splash} from './Splash';
+export {default as Toast} from './Toast';

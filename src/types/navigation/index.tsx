@@ -1,6 +1,6 @@
-import type {RootStackParamList, RootStackScreenProps} from './rootStack';
+import type {RootStackParamList} from './rootStack';
 
-export type {RootStackParamList, RootStackScreenProps};
+export * from './rootStack';
 
 declare global {
   namespace ReactNavigation {

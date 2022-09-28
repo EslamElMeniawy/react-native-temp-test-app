@@ -4,7 +4,7 @@ import * as RNLocalize from 'react-native-localize';
 import RNRestart from 'react-native-restart';
 import memoize from 'lodash.memoize';
 
-import AppLanguages from '../../enums/AppLanguages';
+import {AppLanguages} from '../../enums';
 
 const getLogMessage = (message: string) => {
   return `## I18n: ${message}`;

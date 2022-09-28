@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getApplicationName} from 'react-native-device-info';
 import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 
-import AppColors from './enums/AppColors';
+import {AppColors} from './enums';
 import {
   defaultChannelId,
   displayLocalNotification,
@@ -19,32 +19,39 @@ import {
   processNotification,
 } from './utils';
 import {setI18nConfig, translate} from './core';
-import {RootState} from './store';
-import {setNotificationsCount} from './store/notificationsCount';
-import Notification from './types/api/Notification';
 import {
+  RootState,
+  setNotificationsCount,
   setIsInternetAvailable,
   setIsConnectionExpensive,
   removeIsConnectionExpensive,
-} from './store/networkState';
+} from './store';
+import {Notification} from './types';
 
-import NavigationContainer from './navigation/NavigationContainer';
+import {NavigationContainer} from './navigation';
 import {ErrorDialog, Toast} from './components';
 
-const getLogMessage = (message: string) => {
-  return `## App: ${message}`;
-};
+export default React.memo(() => {
+  // #region Logger
+  const getLogMessage = (message: string) => {
+    return `## App: ${message}`;
+  };
+  // #endregion
 
-export default () => {
+  // #region Redux
   const dispatch = useDispatch();
   const {user} = useSelector((state: RootState) => state.user);
 
   const {notificationsCount} = useSelector(
     (state: RootState) => state.notificationsCount,
   );
+  // #endregion
 
+  // #region Variables
   let internetLostToastId: string | undefined = undefined;
+  // #endregion
 
+  // #region Setup
   // Log initialization.
   React.useEffect(() => {
     const appName = getApplicationName();
@@ -293,7 +300,9 @@ export default () => {
 
     return unsubscribe;
   }, []);
+  // #endregion
 
+  // #region UI
   return (
     <View style={styles.appContainer}>
       <PaperProvider theme={paperTheme}>
@@ -303,7 +312,8 @@ export default () => {
       </PaperProvider>
     </View>
   );
-};
+  // #endregion
+});
 
 const styles = ScaledSheet.create({
   appContainer: {

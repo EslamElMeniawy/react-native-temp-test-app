@@ -4,7 +4,7 @@ import {Edge, SafeAreaView} from 'react-native-safe-area-context';
 import {ScaledSheet} from 'react-native-size-matters';
 import tinyColor from 'tinycolor2';
 
-import AppColors from '../enums/AppColors';
+import {AppColors} from '../enums';
 
 interface Props {
   edges?: Edge[];
@@ -13,7 +13,7 @@ interface Props {
   style?: StyleProp<ViewStyle>;
 }
 
-export default (props: Props) => {
+export default React.memo((props: Props) => {
   const {edges, statusBarProps, children, style} = props;
 
   const {backgroundColor, barStyle, ...restStatusBarProps} =
@@ -35,7 +35,7 @@ export default (props: Props) => {
       {children}
     </SafeAreaView>
   );
-};
+});
 
 const styles = ScaledSheet.create({
   container: {

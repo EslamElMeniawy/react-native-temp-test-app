@@ -12,22 +12,24 @@ import {
   StackActions,
 } from '@react-navigation/native';
 
-import {RootStackParamList} from '../types/navigation';
+import {RootStackParamList} from '../types';
 
 const getLogMessage = (message: string) => {
   return `## NavigationUtils: ${message}`;
 };
 
+type RouteName = keyof RootStackParamList;
+
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 export const navigate = (
-  screenName: keyof RootStackParamList,
-  params?: RootStackParamList[keyof RootStackParamList],
+  screenName: RouteName,
+  params?: RootStackParamList[RouteName],
 ) => {
   console.info(getLogMessage('navigate'), screenName, params);
 
   if (navigationRef.isReady()) {
-    navigationRef.navigate(screenName, params);
+    navigationRef.navigate(screenName, params as any);
   }
 };
 
@@ -50,8 +52,8 @@ export const goBack = () => {
 };
 
 export const push = (
-  screenName: keyof RootStackParamList,
-  params?: RootStackParamList[keyof RootStackParamList],
+  screenName: RouteName,
+  params?: RootStackParamList[RouteName],
 ) => {
   console.info(getLogMessage('push'), screenName, params);
 
@@ -61,8 +63,8 @@ export const push = (
 };
 
 export const replace = (
-  screenName: keyof RootStackParamList,
-  params?: RootStackParamList[keyof RootStackParamList],
+  screenName: RouteName,
+  params?: RootStackParamList[RouteName],
 ) => {
   console.info(getLogMessage('push'), screenName, params);
 

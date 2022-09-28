@@ -1,17 +1,17 @@
 import React from 'react';
 import Toast from 'react-native-toast-notifications';
 import {Platform, View} from 'react-native';
-import {ScaledSheet, ms} from 'react-native-size-matters';
+import {ScaledSheet} from 'react-native-size-matters';
 import {Text, getStatusBarHeight} from 'roqay-react-native-common-components';
 import tinyColor from 'tinycolor2';
 
-import AppColors from '../enums/AppColors';
+import {AppColors} from '../enums';
 
 interface Props {
   reference?: React.LegacyRef<Toast>;
 }
 
-export default (props: Props) => {
+export default React.memo((props: Props) => {
   const {reference} = props;
 
   return (
@@ -42,7 +42,7 @@ export default (props: Props) => {
       }}
     />
   );
-};
+});
 
 const styles = ScaledSheet.create({
   container: {

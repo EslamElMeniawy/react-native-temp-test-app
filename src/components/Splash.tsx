@@ -4,16 +4,18 @@ import {Text, Button} from 'roqay-react-native-common-components';
 import Config from 'react-native-config';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {setErrorDialogMessage} from '../store/errorDialogMessage';
-import {RootState} from '../store';
+import {RootState, setErrorDialogMessage} from '../store';
 
-export default () => {
+export default React.memo(() => {
   // TODO: Design splash.
+
+  // #region Redux
   const dispatch = useDispatch();
 
   const {isInternetAvailable, isConnectionExpensive} = useSelector(
     (state: RootState) => state.networkState,
   );
+  // #endregion
 
   return (
     <>
@@ -35,7 +37,7 @@ export default () => {
       </Text>
     </>
   );
-};
+});
 
 const styles = ScaledSheet.create({
   content: {

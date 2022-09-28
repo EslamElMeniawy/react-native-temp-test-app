@@ -1,14 +1,11 @@
 import React from 'react';
-import {
-  NavigationContainer,
-  useNavigationContainerRef,
-} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';
 
 import {navigationRef} from './NavigationUtils';
 import RootStack from './RootStack';
 
-export default () => {
+export default React.memo(() => {
   const routeNameRef = React.useRef<string | undefined>();
 
   return (
@@ -34,4 +31,4 @@ export default () => {
       <RootStack />
     </NavigationContainer>
   );
-};
+});
