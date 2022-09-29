@@ -1,4 +1,4 @@
-package com.tempapp.newarchitecture.modules;
+package com.myapp.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;
