@@ -1,6 +1,7 @@
-interface Notification {
+import {FlatListItem} from 'roqay-react-native-common-components';
+
+interface Notification extends FlatListItem {
   id?: number | string;
-  key: string;
   title?: string;
   message?: string;
 }
