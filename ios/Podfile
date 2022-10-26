@@ -34,15 +34,6 @@ target 'MyApp' do
   )
 
   post_install do |installer|
-    # Workaround added to make "Folly" work with "use_frameworks" and "hermes" enabled
-    installer.pods_project.targets.each do |target|
-      if target.name == 'RCT-Folly'
-          target.build_configurations.each do |config|
-              config.build_settings['HEADER_SEARCH_PATHS'] = "$(inherited) ${PODS_ROOT}/fmt/include"
-          end
-      end
-    end
-
     react_native_post_install(
       installer,
       # Set `mac_catalyst_enabled` to `true` in order to apply patches
