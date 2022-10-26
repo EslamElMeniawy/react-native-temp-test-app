@@ -4,7 +4,12 @@ import {Text, Button} from 'roqay-react-native-common-components';
 import Config from 'react-native-config';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {RootState, setErrorDialogMessage} from '../store';
+import {
+  RootState,
+  setErrorDialogMessage,
+  setShowLoadingDialog,
+  removeShowLoadingDialog,
+} from '../store';
 
 export default React.memo(() => {
   // TODO: Design splash.
@@ -27,6 +32,17 @@ export default React.memo(() => {
         style={styles.content}
         text="Show Error Dialog"
         onPress={() => dispatch(setErrorDialogMessage('Some error happened!'))}
+        textProps={{style: styles.buttonText}}
+      />
+      <Button
+        style={styles.content}
+        text="Show Loading Dialog"
+        onPress={() => {
+          dispatch(setShowLoadingDialog(true));
+          setTimeout(() => {
+            dispatch(removeShowLoadingDialog());
+          }, 2000);
+        }}
         textProps={{style: styles.buttonText}}
       />
       <Text style={styles.content}>

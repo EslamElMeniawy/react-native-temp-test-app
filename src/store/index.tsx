@@ -6,6 +6,7 @@ import userReducer from './user';
 import notificationsCountReducer from './notificationsCount';
 import errorDialogReducer from './errorDialog';
 import networkStateReducer from './networkState';
+import loadingDialogReducer from './loadingDialog';
 import {api} from './api/baseApi';
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
     notificationsCount: notificationsCountReducer,
     errorDialog: errorDialogReducer,
     networkState: networkStateReducer,
+    loadingDialog: loadingDialogReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: getDefaultMiddleware => {
@@ -35,5 +37,6 @@ export * from './user';
 export * from './notificationsCount';
 export * from './errorDialog';
 export * from './networkState';
+export * from './loadingDialog';
 
 export * from './api';

@@ -29,7 +29,7 @@ import {
 import {Notification} from './types';
 
 import {NavigationContainer} from './navigation';
-import {ErrorDialog, Toast} from './components';
+import {ErrorDialog, LoadingDialog, Toast} from './components';
 
 export default React.memo(() => {
   // #region Logger
@@ -308,6 +308,7 @@ export default React.memo(() => {
       <PaperProvider theme={paperTheme}>
         <NavigationContainer />
         <ErrorDialog />
+        <LoadingDialog />
         <Toast reference={ref => (global['toast'] = ref)} />
       </PaperProvider>
     </View>
