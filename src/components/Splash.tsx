@@ -11,6 +11,8 @@ import {
   removeShowLoadingDialog,
 } from '../store';
 
+import ScrollView from './ScrollView';
+
 export default React.memo(() => {
   // TODO: Design splash.
 
@@ -23,7 +25,7 @@ export default React.memo(() => {
   // #endregion
 
   return (
-    <>
+    <ScrollView>
       <Text type="bold" style={styles.content}>
         Splash Screen
       </Text>
@@ -51,7 +53,7 @@ export default React.memo(() => {
       <Text style={styles.content}>
         {`Connection Expensive: ${isConnectionExpensive}`}
       </Text>
-    </>
+    </ScrollView>
   );
 });
 
