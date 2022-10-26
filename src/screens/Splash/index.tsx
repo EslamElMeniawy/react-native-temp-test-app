@@ -91,12 +91,7 @@ export default React.memo((props: RootStackScreenProps<'Splash'>) => {
 
       if (user) {
         setUserToReduxStore(user);
-
-        if (isInternetAvailable) {
-          getUpdatedUserData();
-        } else {
-          setUserLoaded(true);
-        }
+        getUpdatedUserData();
       } else {
         setUserLoaded(true);
       }
@@ -151,7 +146,7 @@ export default React.memo((props: RootStackScreenProps<'Splash'>) => {
   ) => {
     console.info(getLogMessage('navigateToScreen'), screenName, params);
     const {navigation} = props;
-    navigation.navigate(screenName, params);
+    navigation.replace(screenName, params);
   };
   // #endregion
 
