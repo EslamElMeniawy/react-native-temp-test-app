@@ -31,7 +31,7 @@ const getString = async (key: LocalStorageKeys) => {
   console.info(getLogMessage('getString'), key);
 
   try {
-    let string = await MMKV.getStringAsync(key);
+    const string = await MMKV.getStringAsync(key);
     return string;
   } catch (e) {
     console.error(getLogMessage('Error getString'), key, e);
@@ -56,12 +56,42 @@ const getMap = async (key: LocalStorageKeys) => {
   console.info(getLogMessage('getMap'), key);
 
   try {
-    let map = await MMKV.getMapAsync(key);
+    const map = await MMKV.getMapAsync(key);
     return map;
   } catch (e) {
     console.error(getLogMessage('Error getMap'), key, e);
     return null;
   }
+};
+
+const setInt = async (key: LocalStorageKeys, value: number) => {
+  console.info(getLogMessage('setInt'), key, value);
+
+  try {
+    const result = await MMKV.setIntAsync(key, value);
+    console.info(getLogMessage('result'), result);
+    return result;
+  } catch (e) {
+    console.error(getLogMessage('Error setInt'), key, value, e);
+    return null;
+  }
+};
+
+const getInt = async (key: LocalStorageKeys) => {
+  console.info(getLogMessage('getInt'), key);
+
+  try {
+    const string = await MMKV.getIntAsync(key);
+    return string;
+  } catch (e) {
+    console.error(getLogMessage('Error getInt'), key, e);
+    return null;
+  }
+};
+
+const removeItem = (key: LocalStorageKeys) => {
+  console.info(getLogMessage('removeItem'), key);
+  return MMKV.removeItem(key);
 };
 
 export const getLanguage = async () => {
@@ -90,4 +120,11 @@ export const setUser = async (user: User) => {
   const userSaved = await setMap(LocalStorageKeys.USER, user);
   console.info(getLogMessage('userSaved'), userSaved);
   return userSaved;
+};
+
+export const removeUser = () => {
+  console.info(getLogMessage('removeUser'));
+  const userRemoved = removeItem(LocalStorageKeys.USER);
+  console.info(getLogMessage('userRemoved'), userRemoved);
+  return userRemoved;
 };
