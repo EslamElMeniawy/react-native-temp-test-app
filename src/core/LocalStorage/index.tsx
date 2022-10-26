@@ -10,7 +10,7 @@ const getLogMessage = (message: string) => {
 };
 
 const MMKV = new MMKVLoader()
-  .withInstanceID(getBundleId())
+  .withInstanceID(getBundleId().split('.').join('_'))
   .withEncryption()
   .initialize();
 
