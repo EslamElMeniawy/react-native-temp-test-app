@@ -1,5 +1,9 @@
 enum AppColors {
+  // Helper colors.
   TRANSPARENT = 'transparent',
+
+  // Theme colors.
+  // TODO: Edit theme colors to match app theme.
   PRIMARY = '#6750a4',
   PRIMARY_CONTAINER = '#eaddff',
   SECONDARY = '#625b71',
@@ -29,6 +33,9 @@ enum AppColors {
   INVERSE_SURFACE = '#313033',
   INVERSE_ON_SURFACE = '#f4eff4',
   INVERSE_PRIMARY = '#d0bcff',
+
+  // App colors.
+  // TODO: Add app colors here.
 }
 
 export default AppColors;
