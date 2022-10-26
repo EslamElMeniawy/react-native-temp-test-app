@@ -4,7 +4,7 @@ import Config from 'react-native-config';
 
 import userReducer from './user';
 import notificationsCountReducer from './notificationsCount';
-import errorDialogMessageReducer from './errorDialogMessage';
+import errorDialogReducer from './errorDialog';
 import networkStateReducer from './networkState';
 import {api} from './api/baseApi';
 
@@ -12,7 +12,7 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     notificationsCount: notificationsCountReducer,
-    errorDialogMessage: errorDialogMessageReducer,
+    errorDialog: errorDialogReducer,
     networkState: networkStateReducer,
     [api.reducerPath]: api.reducer,
   },
@@ -33,5 +33,7 @@ export type RootState = ReturnType<typeof store.getState>;
 
 export * from './user';
 export * from './notificationsCount';
-export * from './errorDialogMessage';
+export * from './errorDialog';
 export * from './networkState';
+
+export * from './api';

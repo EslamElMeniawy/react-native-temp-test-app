@@ -16,7 +16,7 @@ export default React.memo(() => {
   const dispatch = useDispatch();
 
   const {errorDialogMessage} = useSelector(
-    (state: RootState) => state.errorDialogMessage,
+    (state: RootState) => state.errorDialog,
   );
   // #endregion
 
