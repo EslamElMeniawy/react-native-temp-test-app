@@ -15,7 +15,6 @@ export const api = createApi({
       }
 
       headers.set('Accept', 'application/json');
-      headers.set('Content-Type', 'application/json; charset=UTF-8');
       headers.set('Accept-Language', getCurrentLocale());
       return headers;
     },
