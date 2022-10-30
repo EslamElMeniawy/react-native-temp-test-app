@@ -1,7 +1,7 @@
 import {User} from '../../types';
 
-// TODO: Change this based on API response.
 export const userResponseToUser = (userResponse: any): User => ({
+  // TODO: Change this mapping based on API response.
   id: userResponse.id,
   name: userResponse.name,
   email: userResponse.email,

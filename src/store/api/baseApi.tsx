@@ -21,5 +21,6 @@ export const api = createApi({
   }),
   endpoints: () => ({}),
   reducerPath: 'api',
-  //   tagTypes: ['Users'],
+  // TODO: If needed add tags to be used in invalidating API data.
+  tagTypes: ['Notifications'],
 });
