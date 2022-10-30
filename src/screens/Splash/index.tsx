@@ -2,13 +2,21 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import RNBootSplash from 'react-native-bootsplash';
 
-import {RootState, setUser as setStateUser} from '../../store';
+import {
+  RootState,
+  setUser as setStateUser,
+  getUser as getUserApi,
+  removeUser as removeStateUser,
+} from '../../store';
 import {
   getLanguage,
   updateLanguage,
   getUser as getLocalStorageUser,
+  setUser as setLocalStorageUser,
+  removeUser as removeLocalStorageUser,
 } from '../../core';
 import {RootStackScreenProps, RootStackParamList, User} from '../../types';
+import {is401Error, userResponseToUser} from '../../utils';
 
 import {Screen, Splash} from '../../components';
 
@@ -22,15 +30,15 @@ export default React.memo((props: RootStackScreenProps<'Splash'>) => {
   // #region Redux
   const dispatch = useDispatch();
   const {user: stateUser} = useSelector((state: RootState) => state.user);
-
-  const {isInternetAvailable} = useSelector(
-    (state: RootState) => state.networkState,
-  );
   // #endregion
 
   // #region State
   const [isLanguageLoaded, setLanguageLoaded] = React.useState<boolean>(false);
   const [isUserLoaded, setUserLoaded] = React.useState<boolean>(false);
+  // #endregion
+
+  // #region API
+  const [callGetUserApi] = getUserApi();
   // #endregion
 
   // #region Setup
@@ -120,9 +128,33 @@ export default React.memo((props: RootStackScreenProps<'Splash'>) => {
    * - Set user to redux store.
    * - Set "isUserLoaded" state variable.
    */
-  const getUpdatedUserData = () => {
+  const getUpdatedUserData = async () => {
     console.info(getLogMessage('getUpdatedUserData'));
-    // TODO: Call API to get updated user data.
+
+    try {
+      const userResponse = await callGetUserApi().unwrap();
+      handleUserResponse(userResponse);
+    } catch (error) {
+      if (is401Error(error)) {
+        removeLocalStorageUser();
+        dispatch(removeStateUser());
+      }
+
+      setUserLoaded(true);
+    }
+  };
+
+  const handleUserResponse = async (response: any) => {
+    console.info(getLogMessage('handleUserResponse'), response);
+
+    // TODO: Check if extra check needed here based on API response.
+    const user = userResponseToUser(response);
+    const localStorageUser = await getLocalStorageUser();
+    user.apiToken = localStorageUser?.apiToken;
+    user.fcmToken = localStorageUser?.fcmToken;
+    setLocalStorageUser(user);
+    setUserToReduxStore(user);
+    setUserLoaded(true);
   };
 
   React.useEffect(() => {
