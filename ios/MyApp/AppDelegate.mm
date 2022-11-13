@@ -87,12 +87,25 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   
   // Initialize splash screen.
   [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
+
+  // Added for 'react-native-screens'
+  #if !TARGET_OS_TV
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+  #endif
   
   // Define UNUserNotificationCenter
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
   
   return YES;
+}
+
+// Added for 'react-native-screens'
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+  #if !TARGET_OS_TV
+    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
+  #endif
 }
 
 /// This method controls whether the `concurrentRoot`feature of React18 is turned on or off.
