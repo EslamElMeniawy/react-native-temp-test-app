@@ -7,7 +7,7 @@ import {View, Keyboard, I18nManager} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 
 import {
-  RootState,
+  type RootState,
   setErrorDialogMessage,
   setErrorDialogTitleMessage,
   setShowLoadingDialog,
@@ -125,7 +125,7 @@ export default React.memo(() => {
     <Button
       text="Show Error Dialog"
       onPress={onShowErrorDialogPress}
-      textProps={{style: styles.buttonText}}
+      textProps={{style: styles.buttonText, children: undefined}}
     />
   );
 
@@ -133,7 +133,7 @@ export default React.memo(() => {
     <Button
       text="Show Loading Dialog"
       onPress={onShowLoadingDialogPress}
-      textProps={{style: styles.buttonText}}
+      textProps={{style: styles.buttonText, children: undefined}}
     />
   );
 
@@ -162,7 +162,7 @@ export default React.memo(() => {
       <Button
         text="Submit Form"
         onPress={handleSubmit(onSubmitPress)}
-        textProps={{style: styles.buttonText}}
+        textProps={{style: styles.buttonText, children: undefined}}
         style={styles.submitButton}
       />
     </>

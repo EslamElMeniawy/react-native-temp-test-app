@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import RNBootSplash from 'react-native-bootsplash';
 
 import {
-  RootState,
+  type RootState,
   setUser as setStateUser,
   getUser as getUserApi,
   removeUser as removeStateUser,

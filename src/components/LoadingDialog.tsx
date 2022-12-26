@@ -2,7 +2,7 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {LoadingDialog} from 'roqay-react-native-common-components';
 
-import {RootState} from '../store';
+import {type RootState} from '../store';
 
 export default React.memo(() => {
   // #region Redux
