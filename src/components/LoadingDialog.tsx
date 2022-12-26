@@ -6,9 +6,7 @@ import {type RootState} from '../store';
 
 export default React.memo(() => {
   // #region Redux
-  const {showLoadingDialog} = useSelector(
-    (state: RootState) => state.loadingDialog,
-  );
+  const {showLoadingDialog} = useSelector((state: RootState) => state.dialogs);
   // #endregion
 
   return <LoadingDialog visible={showLoadingDialog} />;

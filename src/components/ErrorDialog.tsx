@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AlertDialog} from 'roqay-react-native-common-components';
 
-import {type RootState, removeErrorDialogMessage} from '../store';
+import {type RootState, removeErrorDialog} from '../store';
 import {translate} from '../core';
 import {removeUserDataLogout} from '../utils';
 
@@ -11,7 +11,7 @@ export default React.memo(() => {
   const dispatch = useDispatch();
 
   const {errorDialogTitle, errorDialogMessage} = useSelector(
-    (state: RootState) => state.errorDialog,
+    (state: RootState) => state.dialogs,
   );
   // #endregion
 
@@ -24,7 +24,7 @@ export default React.memo(() => {
       removeUserDataLogout();
     }
 
-    dispatch(removeErrorDialogMessage());
+    dispatch(removeErrorDialog());
   };
 
   return (

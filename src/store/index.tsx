@@ -3,17 +3,15 @@ import logger from 'redux-logger';
 import Config from 'react-native-config';
 
 import userReducer from './user';
-import errorDialogReducer from './errorDialog';
+import dialogsReducer from './dialogs';
 import networkStateReducer from './networkState';
-import loadingDialogReducer from './loadingDialog';
 import {api} from './api/baseApi';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    errorDialog: errorDialogReducer,
+    dialogs: dialogsReducer,
     networkState: networkStateReducer,
-    loadingDialog: loadingDialogReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: getDefaultMiddleware => {
@@ -32,8 +30,7 @@ export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 
 export * from './user';
-export * from './errorDialog';
+export * from './dialogs';
 export * from './networkState';
-export * from './loadingDialog';
 
 export * from './api';

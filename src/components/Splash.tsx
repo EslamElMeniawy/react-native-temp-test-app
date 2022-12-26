@@ -3,15 +3,15 @@ import {ScaledSheet} from 'react-native-size-matters';
 import {Text, Button, TextInput} from 'roqay-react-native-common-components';
 import Config from 'react-native-config';
 import {useDispatch, useSelector} from 'react-redux';
-import {View, Keyboard, I18nManager} from 'react-native';
+import {View, Keyboard} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 
 import {
   type RootState,
   setErrorDialogMessage,
   setErrorDialogTitleMessage,
-  setShowLoadingDialog,
-  removeShowLoadingDialog,
+  showLoadingDialog,
+  removeLoadingDialog,
 } from '../store';
 import {translate} from '../core';
 import {emailRegExp, passwordRegExp} from '../utils';
@@ -63,10 +63,10 @@ export default React.memo(() => {
 
   const onShowLoadingDialogPress = () => {
     console.info(getLogMessage('onShowLoadingDialogPress'));
-    dispatch(setShowLoadingDialog(true));
+    dispatch(showLoadingDialog());
 
     setTimeout(() => {
-      dispatch(removeShowLoadingDialog());
+      dispatch(removeLoadingDialog());
     }, 2000);
   };
 
@@ -76,10 +76,10 @@ export default React.memo(() => {
 
     // Check if Internet available before calling API.
     if (isInternetAvailable) {
-      dispatch(setShowLoadingDialog(true));
+      dispatch(showLoadingDialog());
 
       setTimeout(() => {
-        dispatch(removeShowLoadingDialog());
+        dispatch(removeLoadingDialog());
         dispatch(
           setErrorDialogTitleMessage({
             title: 'Done Submitting Form',
@@ -286,7 +286,6 @@ const styles = ScaledSheet.create({
     width: '90%',
     alignSelf: 'center',
     marginTop: '16@vs',
-    textAlign: I18nManager.isRTL ? 'right' : 'left',
   },
   submitButton: {
     width: '90%',
