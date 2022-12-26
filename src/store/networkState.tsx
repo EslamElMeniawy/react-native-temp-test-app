@@ -6,8 +6,8 @@ interface NetworkStateState {
 }
 
 const initialState = {
-  isInternetAvailable: undefined,
-  isConnectionExpensive: undefined,
+  isInternetAvailable: true,
+  isConnectionExpensive: false,
 } as NetworkStateState;
 
 export const networkStateSlice = createSlice({
