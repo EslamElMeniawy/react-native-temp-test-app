@@ -1,32 +1,19 @@
-import type {AnyAction, Dispatch} from '@reduxjs/toolkit';
+import messaging from '@react-native-firebase/messaging';
 
 import {removeUser as removeLocalStorageUser} from '../core';
-import {
-  removeUser as removeStateUser,
-  removeNotificationsCount,
-} from '../store';
-import {popToTop, replace} from '../navigation';
+import {store, removeUser as removeStateUser, api} from '../store';
+import {reset} from '../navigation';
 
 const getLogMessage = (message: string) => {
   return `## UserUtils: ${message}`;
 };
 
-export const removeUserDataLogout = (
-  dispatch: Dispatch<AnyAction>,
-  onSuccess?: () => void,
-  onError?: () => void,
-) => {
+export const removeUserDataLogout = async () => {
   console.info(getLogMessage('removeUserDataLogout'));
   const userRemoved = removeLocalStorageUser();
   console.info(getLogMessage('userRemoved'), userRemoved);
-
-  if (userRemoved) {
-    dispatch(removeStateUser());
-    dispatch(removeNotificationsCount());
-    popToTop();
-    replace('Login');
-    onSuccess?.();
-  } else {
-    onError?.();
-  }
+  await messaging().deleteToken();
+  store.dispatch(removeStateUser());
+  reset('Login');
+  store.dispatch(api.util.resetApiState());
 };

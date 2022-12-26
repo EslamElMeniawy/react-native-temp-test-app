@@ -1,17 +1,18 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import Config from 'react-native-config';
 
-import {RootState} from '../../store';
+import {type RootState} from '../../store';
 import {getCurrentLocale} from '../../core';
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: Config.API_URL,
+    timeout: 60000,
     prepareHeaders: (headers, {getState}) => {
-      const token = (getState() as RootState).user.user?.apiToken;
+      const apiToken = (getState() as RootState).user.user?.apiToken;
 
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+      if (apiToken) {
+        headers.set('Authorization', apiToken);
       }
 
       headers.set('Accept', 'application/json');
@@ -21,6 +22,7 @@ export const api = createApi({
   }),
   endpoints: () => ({}),
   reducerPath: 'api',
+  refetchOnMountOrArgChange: true,
   // TODO: If needed add tags to be used in invalidating API data.
   tagTypes: ['Notifications'],
 });

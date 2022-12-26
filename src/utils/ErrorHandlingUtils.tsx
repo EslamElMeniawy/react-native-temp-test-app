@@ -1,7 +1,7 @@
 import type {FetchBaseQueryError} from '@reduxjs/toolkit/query';
-import type {AnyAction, Dispatch, SerializedError} from '@reduxjs/toolkit';
+import type {SerializedError} from '@reduxjs/toolkit';
 
-import {setErrorDialogMessage} from '../store';
+import {store, setErrorDialogMessage} from '../store';
 import {translate} from '../core';
 
 const getLogMessage = (message: string) => {
@@ -26,33 +26,19 @@ const isErrorWithMessage = (error: unknown): error is {message: string} => {
   );
 };
 
-const showMessageError = (
-  dispatch: Dispatch<AnyAction>,
-  error: {message: string},
-) => {
+const showMessageError = (error: {message: string}) => {
   console.info(getLogMessage('showMessageError'), error);
-
-  const isNetWorkError =
-    error.message.toLowerCase().indexOf('network') > -1 ||
-    error.message.toLowerCase().indexOf('timeout') > -1;
-
-  dispatch(
-    setErrorDialogMessage(
-      isNetWorkError ? translate('network_error') : error.message,
-    ),
-  );
+  const errorMessage = getMessageError(error);
+  console.info(getLogMessage('errorMessage'), errorMessage);
+  store.dispatch(setErrorDialogMessage(errorMessage));
 };
 
-const showDataError = (
-  dispatch: Dispatch<AnyAction>,
-  data: any,
-  defaultErrorKey: string,
-) => {
+const showDataError = (data: any, defaultErrorKey: string) => {
   console.info(getLogMessage('showDataError'), data, defaultErrorKey);
-  const errorMessage = getDataError(data);
+  const errorMessage = data ? getDataError(data) : undefined;
   console.info(getLogMessage('errorMessage'), errorMessage);
 
-  dispatch(
+  store.dispatch(
     setErrorDialogMessage(
       errorMessage ? errorMessage : translate(defaultErrorKey),
     ),
@@ -62,13 +48,29 @@ const showDataError = (
 const getDataError = (data: any) => {
   console.info(getLogMessage('getDataError'), data);
 
-  // TODO: Change error keys based on API.
-  if ('error' in data && data.error) {
-    return data.error;
-  } else if ('errors_str' in data && data.errors_str) {
-    return data.errors_str;
-  } else if ('message' in data && data.message) {
-    return data.message;
+  if (typeof data === 'object') {
+    if ('error' in data && data.error && typeof data.error === 'string') {
+      return data.error;
+    } else if (
+      'errors' in data &&
+      data.errors &&
+      typeof data.errors === 'string'
+    ) {
+      return data.errors;
+    } else if (
+      'errors' in data &&
+      data.errors &&
+      typeof data.errors === 'object' &&
+      'message' in data.errors &&
+      data.errors.message &&
+      data.errors.message.length
+    ) {
+      return data.errors.message.join('\n');
+    } else if ('message' in data && data.message) {
+      return data.message;
+    } else {
+      return undefined;
+    }
   } else {
     return undefined;
   }
@@ -85,16 +87,14 @@ const getMessageError = (error: {message: string}) => {
 };
 
 export const handleResponseErrorInDialog = (
-  dispatch: Dispatch<AnyAction>,
   response: any,
   defaultErrorKey: string,
 ) => {
   console.info(getLogMessage('handleErrorInDialog'), response, defaultErrorKey);
-  showDataError(dispatch, response, defaultErrorKey);
+  showDataError(response, defaultErrorKey);
 };
 
 export const handleErrorInDialog = (
-  dispatch: Dispatch<AnyAction>,
   error: unknown,
   defaultErrorKey: string,
   shouldSkip401: boolean = false,
@@ -108,26 +108,23 @@ export const handleErrorInDialog = (
 
   if (isFetchBaseQueryError(error)) {
     if (error.status == 401 && !shouldSkip401) {
-      dispatch(setErrorDialogMessage(translate('session_expired')));
+      store.dispatch(setErrorDialogMessage(translate('session_expired')));
     } else {
-      showDataError(dispatch, error.data as any, defaultErrorKey);
+      showDataError(error.data as any, defaultErrorKey);
     }
   } else if (isErrorWithMessage(error)) {
-    showMessageError(dispatch, error);
+    showMessageError(error);
   } else {
-    dispatch(setErrorDialogMessage(translate(defaultErrorKey)));
+    store.dispatch(setErrorDialogMessage(translate(defaultErrorKey)));
   }
 };
 
-export const is401Error = (error: unknown) =>
-  isFetchBaseQueryError(error) && error.status == 401;
+export const isErrorWithStatus = (status: number, error: unknown) =>
+  isFetchBaseQueryError(error) && error.status == status;
 
-export const handle401ErrorOnly = (
-  dispatch: Dispatch<AnyAction>,
-  error: unknown,
-) => {
-  if (is401Error(error)) {
-    dispatch(setErrorDialogMessage(translate('session_expired')));
+export const handle401ErrorOnly = (error: unknown) => {
+  if (isErrorWithStatus(401, error)) {
+    store.dispatch(setErrorDialogMessage(translate('session_expired')));
   }
 };
 
@@ -144,6 +141,13 @@ export const getErrorMessage = (
   if (isFetchBaseQueryError(error)) {
     if (error.status == 401) {
       return translate('session_expired');
+    } else if (
+      error.status == 'TIMEOUT_ERROR' ||
+      (error.status == 'FETCH_ERROR' &&
+        error.error &&
+        error.error.toLocaleLowerCase().indexOf('network') > -1)
+    ) {
+      return translate('network_error');
     } else {
       return getDataError(error.data as any);
     }
@@ -152,4 +156,22 @@ export const getErrorMessage = (
   } else {
     return undefined;
   }
+};
+
+export const getErrorsObject = (
+  error: FetchBaseQueryError,
+): Record<string, string[]> | undefined => {
+  const data = error.data as any;
+
+  if (
+    typeof data === 'object' &&
+    'errors' in data &&
+    data.errors &&
+    typeof data.errors === 'object' &&
+    Object.keys(data.errors).length
+  ) {
+    return data.errors;
+  }
+
+  return undefined;
 };

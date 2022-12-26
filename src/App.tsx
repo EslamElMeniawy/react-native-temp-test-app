@@ -6,9 +6,10 @@ import {configureLog} from 'roqay-react-native-common-components';
 import Config from 'react-native-config';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {getApplicationName} from 'react-native-device-info';
 import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 import {AppColors} from './enums';
 import {
@@ -18,10 +19,9 @@ import {
   paperTheme,
   processNotification,
 } from './utils';
-import {setI18nConfig, translate} from './core';
+import {setI18nConfig, translate, getUser} from './core';
 import {
-  RootState,
-  setNotificationsCount,
+  setUser as setStateUser,
   setIsInternetAvailable,
   setIsConnectionExpensive,
   removeIsConnectionExpensive,
@@ -40,15 +40,14 @@ export default React.memo(() => {
 
   // #region Redux
   const dispatch = useDispatch();
-  const {user} = useSelector((state: RootState) => state.user);
-
-  const {notificationsCount} = useSelector(
-    (state: RootState) => state.notificationsCount,
-  );
   // #endregion
 
   // #region Variables
   let internetLostToastId: string | undefined = undefined;
+  // #endregion
+
+  // #region State
+  const [languageLoaded, setLanguageLoaded] = React.useState<boolean>(false);
   // #endregion
 
   // #region Setup
@@ -69,6 +68,7 @@ export default React.memo(() => {
   // Localization initialization.
   React.useEffect(() => {
     setI18nConfig();
+    setLanguageLoaded(true);
   }, []);
 
   // Add listener for network state change.
@@ -252,12 +252,23 @@ export default React.memo(() => {
   React.useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.info(getLogMessage('onMessage'), remoteMessage);
+      const user = await getUser();
 
       if (user) {
         console.info(getLogMessage('User Available'));
 
         // Increase notifications count.
-        dispatch(setNotificationsCount((notificationsCount || 0) + 1));
+        const userWithNewNotificationsCount = {...user};
+
+        userWithNewNotificationsCount.unreadNotificationsCount =
+          (user.unreadNotificationsCount || 0) + 1;
+
+        console.info(
+          getLogMessage('userWithNewNotificationsCount'),
+          userWithNewNotificationsCount,
+        );
+
+        dispatch(setStateUser(userWithNewNotificationsCount));
 
         // Show local notification.
         displayLocalNotification(remoteMessage);
@@ -304,19 +315,26 @@ export default React.memo(() => {
 
   // #region UI
   return (
-    <View style={styles.appContainer}>
-      <PaperProvider theme={paperTheme}>
-        <NavigationContainer />
-        <ErrorDialog />
-        <LoadingDialog />
-        <Toast reference={ref => (global['toast'] = ref)} />
-      </PaperProvider>
-    </View>
+    <GestureHandlerRootView style={styles.gestureHandlerRoot}>
+      <View style={styles.appContainer}>
+        {languageLoaded && (
+          <PaperProvider theme={paperTheme}>
+            <NavigationContainer />
+            <ErrorDialog />
+            <LoadingDialog />
+            <Toast reference={ref => (global['toast'] = ref)} />
+          </PaperProvider>
+        )}
+      </View>
+    </GestureHandlerRootView>
   );
   // #endregion
 });
 
 const styles = ScaledSheet.create({
+  gestureHandlerRoot: {
+    flex: 1,
+  },
   appContainer: {
     flex: 1,
     backgroundColor: AppColors.BACKGROUND,

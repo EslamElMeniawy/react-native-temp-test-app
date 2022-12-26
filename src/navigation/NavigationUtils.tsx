@@ -10,6 +10,7 @@
 import {
   createNavigationContainerRef,
   StackActions,
+  CommonActions,
 } from '@react-navigation/native';
 
 import {RootStackParamList} from '../types';
@@ -78,5 +79,21 @@ export const popToTop = () => {
 
   if (navigationRef.isReady()) {
     navigationRef.dispatch(StackActions.popToTop());
+  }
+};
+
+export const reset = (
+  screenName: RouteName,
+  params?: RootStackParamList[RouteName],
+) => {
+  console.info(getLogMessage('reset'), screenName, params);
+
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: screenName, params: params}],
+      }),
+    );
   }
 };
