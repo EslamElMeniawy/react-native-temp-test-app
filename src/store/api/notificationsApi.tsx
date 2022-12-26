@@ -40,6 +40,6 @@ export const notificationsApi = api.injectEndpoints({
 });
 
 export const {
-  useGetNotificationsQuery: getNotifications,
-  useUpdateFcmTokenMutation: updateFcmToken,
+  useGetNotificationsQuery: getNotificationsApi,
+  useUpdateFcmTokenMutation: updateFcmTokenApi,
 } = notificationsApi;

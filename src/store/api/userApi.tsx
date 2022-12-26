@@ -11,4 +11,4 @@ export const userApi = api.injectEndpoints({
   overrideExisting: false,
 });
 
-export const {useGetUserMutation: getUser} = userApi;
+export const {useGetUserMutation: getUserApi} = userApi;
