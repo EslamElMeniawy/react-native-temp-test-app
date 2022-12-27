@@ -8,11 +8,13 @@
         <!-- Disable forcing dark mode. -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
 
-        <!-- Set status bar background transparent -->
+        <!-- Set system bars background transparent -->
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
 
-        <!-- Navigation bar will stay translucent on Android < 8.1 -->
-        <item name="android:windowTranslucentNavigation">true</item>
+        <!-- Disable auto contrasted system bars background -->
+        <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>
+        <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
     </style>
 
     <!-- Added for 'splash screen' -->
@@ -22,11 +24,9 @@
         <item name="windowSplashScreenAnimatedIcon">@mipmap/bootsplash_logo</item>
         <item name="postSplashScreenTheme">@style/AppTheme</item>
 
-        <!-- Status bar initial style: true = dark-content, false = light-content -->
+        <!-- Bars initial styles: true = dark-content, false = light-content -->
         <item name="android:windowLightStatusBar">true</item>
-
-        <!-- Navigation bar will stay translucent on Android < 8.1 -->
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
 </resources>

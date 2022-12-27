@@ -1,44 +1,114 @@
 import React from 'react';
-import {StatusBar, StatusBarProps, StyleProp, ViewStyle} from 'react-native';
-import {Edge, SafeAreaView} from 'react-native-safe-area-context';
+import {StyleProp, ViewStyle, View} from 'react-native';
+import {
+  Edge,
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import {ScaledSheet} from 'react-native-size-matters';
 import tinyColor from 'tinycolor2';
+import {
+  StatusBar,
+  NavigationBar,
+  StatusBarProps,
+  NavigationBarProps,
+} from 'react-native-bars';
 
 import {AppColors} from '../enums';
 
 interface Props {
   edges?: Edge[];
   statusBarProps?: StatusBarProps;
+  statusBarColor?: string;
+  navigationBarProps?: NavigationBarProps;
+  navigationBarColor?: string;
   children?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 }
 
 export default React.memo((props: Props) => {
-  const {edges, statusBarProps, children, style} = props;
+  const insets = useSafeAreaInsets();
 
-  const {backgroundColor, barStyle, ...restStatusBarProps} =
+  const {
+    edges,
+    statusBarProps,
+    statusBarColor,
+    navigationBarProps,
+    navigationBarColor,
+    children,
+    style,
+  } = props;
+
+  const {barStyle: statusBarStyle, ...restStatusBarProps} =
     statusBarProps || {};
 
-  const statusBarBackgroundColor = backgroundColor || AppColors.BACKGROUND;
+  const {barStyle: navigationBarStyle, ...restNavigationBarProps} =
+    navigationBarProps || {};
 
   return (
-    <SafeAreaView style={[styles.container, style]} edges={edges}>
-      <StatusBar
-        backgroundColor={statusBarBackgroundColor}
-        barStyle={
-          barStyle || tinyColor(statusBarBackgroundColor as string).isLight()
-            ? 'dark-content'
-            : 'light-content'
-        }
-        {...restStatusBarProps}
-      />
-      {children}
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <View
+        style={{
+          height: !edges || (edges && edges.includes('top')) ? insets.top : 0,
+          backgroundColor: statusBarColor
+            ? statusBarColor
+            : AppColors.BACKGROUND,
+        }}>
+        <StatusBar
+          barStyle={
+            statusBarStyle
+              ? statusBarStyle
+              : tinyColor(
+                  statusBarColor ? statusBarColor : AppColors.BACKGROUND,
+                ).isLight()
+              ? 'dark-content'
+              : 'light-content'
+          }
+          {...restStatusBarProps}
+        />
+      </View>
+      <View
+        style={[
+          styles.content,
+          {
+            paddingRight:
+              !edges || (edges && edges.includes('right')) ? insets.right : 0,
+            paddingLeft:
+              !edges || (edges && edges.includes('left')) ? insets.left : 0,
+          },
+          style,
+        ]}>
+        {children}
+      </View>
+      <View
+        style={{
+          height:
+            !edges || (edges && edges.includes('bottom')) ? insets.bottom : 0,
+          backgroundColor: navigationBarColor
+            ? navigationBarColor
+            : AppColors.BACKGROUND,
+        }}>
+        <NavigationBar
+          barStyle={
+            navigationBarStyle
+              ? navigationBarStyle
+              : tinyColor(
+                  navigationBarColor
+                    ? navigationBarColor
+                    : AppColors.BACKGROUND,
+                ).isLight()
+              ? 'dark-content'
+              : 'light-content'
+          }
+          {...restNavigationBarProps}
+        />
+      </View>
+    </SafeAreaProvider>
   );
 });
 
 const styles = ScaledSheet.create({
-  container: {
+  content: {
     flex: 1,
     backgroundColor: AppColors.BACKGROUND,
   },

@@ -12,6 +12,9 @@ import com.zoontek.rnbootsplash.RNBootSplash;
 import android.content.Intent;
 import android.content.res.Configuration;
 
+// Added for 'react-native-bars'.
+import com.zoontek.rnbars.RNBars;
+
 public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,9 @@ public class MainActivity extends ReactActivity {
 
     // Passed null for 'react-native-screens'.
     super.onCreate(null);
+
+    // Added for 'react-native-bars'.
+    RNBars.init(this, "dark-content");
   }
 
   // Added for 'react-native-orientation-locker'.
