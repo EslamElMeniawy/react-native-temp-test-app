@@ -1,5 +1,4 @@
 import {MMKVLoader} from 'react-native-mmkv-storage';
-import {getBundleId} from 'react-native-device-info';
 
 import LocalStorageKeys from './keys';
 import {AppLanguages} from '../../enums';
@@ -9,10 +8,7 @@ const getLogMessage = (message: string) => {
   return `## LocalStorage: ${message}`;
 };
 
-const MMKV = new MMKVLoader()
-  .withInstanceID(getBundleId().split('.').join('_'))
-  .withEncryption()
-  .initialize();
+const MMKV = new MMKVLoader().withEncryption().initialize();
 
 const setString = async (key: LocalStorageKeys, value: string) => {
   console.info(getLogMessage('setString'), key, value);
