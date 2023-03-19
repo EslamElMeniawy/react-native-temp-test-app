@@ -2,5 +2,10 @@
   "app_name": "MyApp",
   "session_expired": "Your login session has been expired.\nPlease login again.",
   "ok": "OK",
-  "internet_lost": "Internet connection lost!"
+  "internet_lost": "Internet connection lost!",
+  "error_processing_request": "Error while processing your request",
+  "error_open_url": "Error while opening URL\nMake sure you have a browser app installed",
+  "error_open_mail": "Error while opening mail\nMake sure you have a mail app installed",
+  "error_open_phone": "Error while opening phone\nMake sure you have a phone app installed",
+  "error_open_whats_app": "Error while opening WhatsApp\nMake sure you have WhatsApp app installed"
 }

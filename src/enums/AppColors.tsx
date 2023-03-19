@@ -31,12 +31,13 @@ enum AppColors {
   INVERSE_SURFACE = '#313033',
   INVERSE_ON_SURFACE = '#f4eff4',
   INVERSE_PRIMARY = '#d0bcff',
-  SHADOW = '#000000',
-  ELEVATION_LEVEL_1 = '#F7F3F9',
-  ELEVATION_LEVEL_2 = '#F3EDF6',
-  ELEVATION_LEVEL_3 = '#EEE8F4',
-  ELEVATION_LEVEL_4 = '#ECE6F3',
-  ELEVATION_LEVEL_5 = '#E9E3F1',
+  SHADOW = 'rgb(0, 0, 0)',
+  BACKDROP = 'rgba(44, 49, 55, 0.4)',
+  ELEVATION_LEVEL_1 = 'rgb(241, 244, 250)',
+  ELEVATION_LEVEL_2 = 'rgb(234, 240, 248)',
+  ELEVATION_LEVEL_3 = 'rgb(227, 235, 245)',
+  ELEVATION_LEVEL_4 = 'rgb(225, 233, 244)',
+  ELEVATION_LEVEL_5 = 'rgb(220, 230, 242)',
 
   // App colors.
   // TODO: Add app colors here.

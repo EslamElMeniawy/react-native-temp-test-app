@@ -3,7 +3,7 @@ import {ScrollView} from 'roqay-react-native-common-components';
 import {Props} from 'roqay-react-native-common-components/src/components/ScrollView';
 
 export default React.memo((props: Omit<Props, 'theme'>) => {
-  const {enableOnAndroid, ...restProps} = props;
+  const {enableOnAndroid, keyboardDismissMode, ...restProps} = props;
 
   return (
     <ScrollView
@@ -12,6 +12,7 @@ export default React.memo((props: Omit<Props, 'theme'>) => {
           ? true
           : enableOnAndroid
       }
+      keyboardDismissMode={keyboardDismissMode || 'none'}
       {...restProps}
     />
   );

@@ -17,7 +17,7 @@ import {
   setUser as setLocalStorageUser,
   removeUser as removeLocalStorageUser,
 } from '../../core';
-import {RootStackScreenProps, User} from '../../types';
+import type {RootStackScreenProps, User} from '../../types';
 import {AppImages} from '../../enums';
 import {isErrorWithStatus} from '../../utils';
 
@@ -33,13 +33,10 @@ export default React.memo((props: RootStackScreenProps<'Splash'>) => {
   // #region Redux
   const dispatch = useDispatch();
   const {user: stateUser} = useSelector((state: RootState) => state.user);
-
-  const {isInternetAvailable} = useSelector(
-    (state: RootState) => state.networkState,
-  );
   // #endregion
 
   // #region Variables
+  const {navigation} = props;
   const opacity = React.useRef(new Animated.Value(1));
   const translateY = React.useRef(new Animated.Value(0));
   // #endregion
@@ -62,98 +59,141 @@ export default React.memo((props: RootStackScreenProps<'Splash'>) => {
 
   // #region Setup
   React.useEffect(() => {
+    /**
+     * getSavedLanguage
+     *
+     * Load language from local storage then:
+     * - Update app language and set "isLanguageLoaded" state variable.
+     */
+    const getSavedLanguage = async () => {
+      console.info(getLogMessage('getSavedLanguage'));
+      const language = await getLanguage();
+      console.info(getLogMessage('language'), language);
+      updateLanguage(language);
+      setLanguageLoaded(true);
+    };
+
+    /**
+     * getSavedUser
+     *
+     * Load user data from local storage then:
+     * - If user available:
+     *   - Set user to redux store.
+     *   - Check if Internet connection available then:
+     *     - If available call "getUpdatedUserData" to load updated user data from API.
+     *     - Else set "isUserLoaded" state variable.
+     * - Else:
+     *   - Set "isUserLoaded" state variable.
+     */
+    const getSavedUser = async () => {
+      console.info(getLogMessage('getSavedUser'));
+      const user = await getLocalStorageUser();
+      console.info(getLogMessage('user'), user);
+
+      if (user) {
+        setUserToReduxStore(user);
+        getUpdatedUserData();
+      } else {
+        setUserLoaded(true);
+      }
+    };
+
+    /**
+     * setUserToReduxStore
+     *
+     * Set given user to redux store.
+     *
+     * @param user The user to set to redux store.
+     */
+    const setUserToReduxStore = (user: User) => {
+      console.info(getLogMessage('setUserToReduxStore'), user);
+      dispatch(setStateUser(user));
+    };
+
+    /**
+     * getUpdatedUserData
+     *
+     * Call API to load updated user data then:
+     * - Set user to local storage.
+     * - Set user to redux store.
+     * - Set "isUserLoaded" state variable.
+     */
+    const getUpdatedUserData = async () => {
+      console.info(getLogMessage('getUpdatedUserData'));
+
+      try {
+        const user = await callGetUserApi().unwrap();
+        const localStorageUser = await getLocalStorageUser();
+
+        const userWithTokens = {
+          ...user,
+          apiToken: user.apiToken ? user.apiToken : localStorageUser?.apiToken,
+          fcmToken: localStorageUser?.fcmToken,
+        };
+
+        console.info(getLogMessage('userWithTokens'), userWithTokens);
+        setLocalStorageUser(userWithTokens);
+        setUserToReduxStore(userWithTokens);
+        setUserLoaded(true);
+      } catch (error) {
+        if (isErrorWithStatus(401, error)) {
+          removeLocalStorageUser();
+          dispatch(removeStateUser());
+        }
+
+        setUserLoaded(true);
+      }
+    };
+
     if (bootSplashLogoIsLoaded) {
       getSavedLanguage();
       getSavedUser();
     }
-  }, [bootSplashLogoIsLoaded]);
-
-  /**
-   * getSavedLanguage
-   *
-   * Load language from local storage then:
-   * - Update app language and set "isLanguageLoaded" state variable.
-   */
-  const getSavedLanguage = async () => {
-    console.info(getLogMessage('getSavedLanguage'));
-    const language = await getLanguage();
-    updateLanguage(language);
-    setLanguageLoaded(true);
-  };
-
-  /**
-   * getSavedUser
-   *
-   * Load user data from local storage then:
-   * - If user available:
-   *   - Set user to redux store.
-   *   - Check if Internet connection available then:
-   *     - If available call "getUpdatedUserData" to load updated user data from API.
-   *     - Else set "isUserLoaded" state variable.
-   * - Else:
-   *   - Set "isUserLoaded" state variable.
-   */
-  const getSavedUser = async () => {
-    console.info(getLogMessage('getSavedUser'));
-    const user = await getLocalStorageUser();
-    console.info(getLogMessage('user'), user);
-
-    if (user) {
-      setUserToReduxStore(user);
-      getUpdatedUserData();
-    } else {
-      setUserLoaded(true);
-    }
-  };
-
-  /**
-   * setUserToReduxStore
-   *
-   * Set given user to redux store.
-   *
-   * @param user The user to set to redux store.
-   */
-  const setUserToReduxStore = (user: User) => {
-    console.info(getLogMessage('setUserToReduxStore'), user);
-    dispatch(setStateUser(user));
-  };
-
-  /**
-   * getUpdatedUserData
-   *
-   * Call API to load updated user data then:
-   * - Set user to local storage.
-   * - Set user to redux store.
-   * - Set "isUserLoaded" state variable.
-   */
-  const getUpdatedUserData = async () => {
-    console.info(getLogMessage('getUpdatedUserData'));
-
-    try {
-      const user = await callGetUserApi().unwrap();
-      const localStorageUser = await getLocalStorageUser();
-
-      const userWithTokens = {
-        ...user,
-        apiToken: user.apiToken ? user.apiToken : localStorageUser?.apiToken,
-        fcmToken: localStorageUser?.fcmToken,
-      };
-
-      console.info(getLogMessage('userWithTokens'), userWithTokens);
-      setLocalStorageUser(userWithTokens);
-      setUserToReduxStore(userWithTokens);
-      setUserLoaded(true);
-    } catch (error) {
-      setUserLoaded(true);
-
-      if (isErrorWithStatus(401, error)) {
-        removeLocalStorageUser();
-        dispatch(removeStateUser());
-      }
-    }
-  };
+  }, [bootSplashLogoIsLoaded, callGetUserApi, dispatch]);
 
   React.useEffect(() => {
+    const hideSplash = async () => {
+      console.info(getLogMessage('hideSplash'));
+
+      try {
+        await RNBootSplash.hide();
+
+        Animated.stagger(250, [
+          Animated.spring(translateY.current, {
+            useNativeDriver: true,
+            toValue: -50,
+          }),
+          Animated.spring(translateY.current, {
+            useNativeDriver: true,
+            toValue: Dimensions.get('window').height,
+          }),
+        ]).start();
+
+        Animated.timing(opacity.current, {
+          useNativeDriver: true,
+          toValue: 0,
+          duration: 150,
+          delay: 350,
+        }).start(() => {
+          setBootSplashIsVisible(false);
+          openNextScreen();
+        });
+      } catch (error) {
+        console.warn(
+          getLogMessage('Error while calling "RNBootSplash.hide"'),
+          error,
+        );
+
+        setBootSplashIsVisible(false);
+        openNextScreen();
+      }
+    };
+
+    const openNextScreen = () => {
+      console.info(getLogMessage('openNextScreen'));
+      navigation.replace(stateUser ? 'Home' : 'Login');
+    };
+
     // Check if register visibility, language and user loaded then:
     // - If user available in state then:
     //   - Open home screen.
@@ -162,50 +202,8 @@ export default React.memo((props: RootStackScreenProps<'Splash'>) => {
     if (isLanguageLoaded && isUserLoaded) {
       hideSplash();
     }
-  }, [isLanguageLoaded, isUserLoaded]);
+  }, [isLanguageLoaded, isUserLoaded, navigation, stateUser]);
 
-  const hideSplash = async () => {
-    console.info(getLogMessage('hideSplash'));
-
-    try {
-      await RNBootSplash.hide();
-
-      Animated.stagger(250, [
-        Animated.spring(translateY.current, {
-          useNativeDriver: true,
-          toValue: -50,
-        }),
-        Animated.spring(translateY.current, {
-          useNativeDriver: true,
-          toValue: Dimensions.get('window').height,
-        }),
-      ]).start();
-
-      Animated.timing(opacity.current, {
-        useNativeDriver: true,
-        toValue: 0,
-        duration: 150,
-        delay: 350,
-      }).start(() => {
-        setBootSplashIsVisible(false);
-        openNextScreen();
-      });
-    } catch (error) {
-      console.warn(
-        getLogMessage('Error while calling "RNBootSplash.hide"'),
-        error,
-      );
-
-      setBootSplashIsVisible(false);
-      openNextScreen();
-    }
-  };
-
-  const openNextScreen = () => {
-    console.info(getLogMessage('openNextScreen'));
-    const {navigation} = props;
-    navigation.replace(Boolean(stateUser) ? 'Home' : 'Login');
-  };
   // #endregion
 
   // #region UI

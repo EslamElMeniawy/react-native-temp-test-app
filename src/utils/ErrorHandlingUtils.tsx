@@ -81,7 +81,8 @@ const getMessageError = (error: {message: string}) => {
 
   const isNetWorkError =
     error.message.toLowerCase().indexOf('network') > -1 ||
-    error.message.toLowerCase().indexOf('timeout') > -1;
+    error.message.toLowerCase().indexOf('timeout') > -1 ||
+    error.message.toLowerCase().indexOf('aborted') > -1;
 
   return isNetWorkError ? translate('network_error') : error.message;
 };
@@ -107,7 +108,7 @@ export const handleErrorInDialog = (
   );
 
   if (isFetchBaseQueryError(error)) {
-    if (error.status == 401 && !shouldSkip401) {
+    if (error.status === 401 && !shouldSkip401) {
       store.dispatch(setErrorDialogMessage(translate('session_expired')));
     } else {
       showDataError(error.data as any, defaultErrorKey);
@@ -120,7 +121,7 @@ export const handleErrorInDialog = (
 };
 
 export const isErrorWithStatus = (status: number, error: unknown) =>
-  isFetchBaseQueryError(error) && error.status == status;
+  isFetchBaseQueryError(error) && error.status === status;
 
 export const handle401ErrorOnly = (error: unknown) => {
   if (isErrorWithStatus(401, error)) {
@@ -139,11 +140,11 @@ export const getErrorMessage = (
   error: FetchBaseQueryError | SerializedError,
 ): string | undefined => {
   if (isFetchBaseQueryError(error)) {
-    if (error.status == 401) {
+    if (error.status === 401) {
       return translate('session_expired');
     } else if (
-      error.status == 'TIMEOUT_ERROR' ||
-      (error.status == 'FETCH_ERROR' &&
+      error.status === 'TIMEOUT_ERROR' ||
+      (error.status === 'FETCH_ERROR' &&
         error.error &&
         error.error.toLocaleLowerCase().indexOf('network') > -1)
     ) {

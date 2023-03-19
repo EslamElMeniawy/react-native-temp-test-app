@@ -6,7 +6,7 @@ import type {
   MD3Theme,
   MD3Colors,
   MD3Typescale,
-} from 'react-native-paper/lib/typescript/types';
+} from 'react-native-paper/lib/typescript/src/types';
 import {Platform} from 'react-native';
 import tinyColor from 'tinycolor2';
 
@@ -49,7 +49,7 @@ const colors: MD3Colors = {
   inversePrimary: AppColors.INVERSE_PRIMARY,
   shadow: AppColors.SHADOW,
   scrim: AppColors.SHADOW,
-  backdrop: tinyColor(AppColors.SHADOW).setAlpha(0.4).toHex8String(),
+  backdrop: AppColors.BACKDROP,
   elevation: {
     ...DefaultTheme.colors.elevation,
     // Note: Color values with transparency cause RN to transfer shadows to children nodes

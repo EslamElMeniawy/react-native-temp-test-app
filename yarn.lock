@@ -1732,7 +1732,7 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-17.3.2.tgz#31ddb8b349f073b540d6e15ac2c4216439b39390"
   integrity sha512-xjgH5QFmVDHpaxxndhGMXhMFBizNg9Rkr5ukeWIMeR/K6Shi/xGVoomjn/PmgoCZWIjX3EJkokXSxsntMlh+Vg==
 
-"@react-native-firebase/app@^17.3.1", "@react-native-firebase/app@^17.3.2":
+"@react-native-firebase/app@^17.3.2":
   version "17.3.2"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-17.3.2.tgz#c39dd34f5389ff65845c5d67313bbf2371275a8f"
   integrity sha512-JPA9PuD3il2/FERnsW5bC/PbXdcBcVMtk4V0vL8YgLh+jQg+E3qQTQmeWn9eOWTYJb6BYOiiNHTdTglvqoo5Cg==
@@ -1741,7 +1741,7 @@
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
 
-"@react-native-firebase/crashlytics@^17.3.1", "@react-native-firebase/crashlytics@^17.3.2":
+"@react-native-firebase/crashlytics@^17.3.2":
   version "17.3.2"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/crashlytics/-/crashlytics-17.3.2.tgz#3d3a6177e16a0234ee4c7c0735eaa228d8e23c50"
   integrity sha512-kmb42rHfwLGMe0pAWTwaZR++RlE1AkOWQh70qasLIkPnhxo25e5DqwKWqqkAQ6eSWmG3bpY/b9AN04VmuxEXfQ==
@@ -6860,6 +6860,20 @@ react-native-vector-image@^0.3.3:
     tempy "^1.0.1"
     yargs "^16.2.0"
 
+react-native-vector-image@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-vector-image/-/react-native-vector-image-0.4.0.tgz#9855c1752c58cf134fe7315e3ef873ac35e0a108"
+  integrity sha512-D8WXOBlv/IYItiHXGWCEx10pNvEpnDGmMvfT64IPA7CR1Niukn2QYwLvhOMk8TUKfadQQDBRYE6a9mP0wFueNw==
+  dependencies:
+    chalk "^4.1.1"
+    chroma-js "^2.1.1"
+    execa "^5.0.0"
+    fs-extra "^9.1.0"
+    pdfkit "^0.12.1"
+    svg-to-pdfkit "^0.1.8"
+    tempy "^1.0.1"
+    yargs "^16.2.0"
+
 react-native@0.71.4:
   version "0.71.4"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.71.4.tgz#f03f600efe68f745d19454ab17f9c1a9ef304790"
@@ -7203,22 +7217,22 @@ rn-host-detect@1.2.0:
   resolved "https://registry.yarnpkg.com/rn-host-detect/-/rn-host-detect-1.2.0.tgz#8b0396fc05631ec60c1cb8789e5070cdb04d0da0"
   integrity sha512-btNg5kzHcjZZ7t7mvvV/4wNJ9e3MPgrWivkRgWURzXL0JJ0pwWlU4zrbmdlz3HHzHOxhBhHB4D+/dbMFfu4/4A==
 
-roqay-react-native-common-components@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/roqay-react-native-common-components/-/roqay-react-native-common-components-2.2.0.tgz#ea1c5dbbcddb06e67a3b8b6a27b584e62ae9eab9"
-  integrity sha512-9kEOkr9YC4624wYjUVbvFBrDSn10pnJlJjGCfupPghG94owqqmhHsOuNt+zjOPwVw0TapioWZL/Lhippd8OW6A==
+roqay-react-native-common-components@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/roqay-react-native-common-components/-/roqay-react-native-common-components-2.3.0.tgz#df98a0cc87830c38795795d7f99cb42912c323d5"
+  integrity sha512-YoQ0l77fY/JPH8RHh0PpmitSLcpruE0iJUK2Ye3ws9ecqjWBBp1M/mhY9HAuK0c8fbs3dRdWjPr1NU7s1+GQeQ==
   dependencies:
     lodash "^4.17.21"
     react-native-size-matters "^0.4.0"
   optionalDependencies:
     "@klarna/react-native-vector-drawable" "^0.4.0"
-    "@react-native-firebase/app" "^17.3.1"
-    "@react-native-firebase/crashlytics" "^17.3.1"
+    "@react-native-firebase/app" "^17.3.2"
+    "@react-native-firebase/crashlytics" "^17.3.2"
     react-native-fast-image "^8.6.3"
     react-native-keyboard-aware-scroll-view "^0.9.5"
     react-native-progress "^5.0.0"
     react-native-svg "^13.8.0"
-    react-native-vector-image "^0.3.3"
+    react-native-vector-image "^0.4.0"
 
 run-parallel@^1.1.9:
   version "1.2.0"

@@ -20,7 +20,7 @@ export const processNotification = (notification: Notification) => {
   console.info(getLogMessage('processNotification'), notification);
 
   // Clear notification.
-  if (notification.id && typeof notification.id == 'string') {
+  if (notification.id && typeof notification.id === 'string') {
     PushNotification.cancelLocalNotification(notification.id);
 
     if (Platform.OS === 'ios') {

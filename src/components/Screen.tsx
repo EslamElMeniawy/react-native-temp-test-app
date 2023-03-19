@@ -45,15 +45,27 @@ export default React.memo((props: Props) => {
   const {barStyle: navigationBarStyle, ...restNavigationBarProps} =
     navigationBarProps || {};
 
+  const statusBarContainerStyle = {
+    height: !edges || (edges && edges.includes('top')) ? insets.top : 0,
+    backgroundColor: statusBarColor ? statusBarColor : AppColors.BACKGROUND,
+  };
+
+  const contentStyle = {
+    paddingRight:
+      !edges || (edges && edges.includes('right')) ? insets.right : 0,
+    paddingLeft: !edges || (edges && edges.includes('left')) ? insets.left : 0,
+  };
+
+  const navigationBarContainerStyle = {
+    height: !edges || (edges && edges.includes('bottom')) ? insets.bottom : 0,
+    backgroundColor: navigationBarColor
+      ? navigationBarColor
+      : AppColors.BACKGROUND,
+  };
+
   return (
     <SafeAreaProvider>
-      <View
-        style={{
-          height: !edges || (edges && edges.includes('top')) ? insets.top : 0,
-          backgroundColor: statusBarColor
-            ? statusBarColor
-            : AppColors.BACKGROUND,
-        }}>
+      <View style={statusBarContainerStyle}>
         <StatusBar
           barStyle={
             statusBarStyle
@@ -67,27 +79,8 @@ export default React.memo((props: Props) => {
           {...restStatusBarProps}
         />
       </View>
-      <View
-        style={[
-          styles.content,
-          {
-            paddingRight:
-              !edges || (edges && edges.includes('right')) ? insets.right : 0,
-            paddingLeft:
-              !edges || (edges && edges.includes('left')) ? insets.left : 0,
-          },
-          style,
-        ]}>
-        {children}
-      </View>
-      <View
-        style={{
-          height:
-            !edges || (edges && edges.includes('bottom')) ? insets.bottom : 0,
-          backgroundColor: navigationBarColor
-            ? navigationBarColor
-            : AppColors.BACKGROUND,
-        }}>
+      <View style={[styles.content, contentStyle, style]}>{children}</View>
+      <View style={navigationBarContainerStyle}>
         <NavigationBar
           barStyle={
             navigationBarStyle

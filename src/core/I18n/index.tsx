@@ -5,6 +5,7 @@ import RNRestart from 'react-native-restart';
 import memoize from 'lodash.memoize';
 
 import {AppLanguages} from '../../enums';
+import {getLanguage, setLanguage} from '../LocalStorage';
 
 const getLogMessage = (message: string) => {
   return `## I18n: ${message}`;
@@ -29,8 +30,15 @@ const defaultLocale: string =
     ? AppLanguages.ARABIC
     : AppLanguages.ENGLISH;
 
-export const setI18nConfig = () => {
+export const setI18nConfig = async () => {
   console.info(getLogMessage('setI18nConfig'));
+
+  // Define the supported translations.
+  i18n.translations = {
+    [AppLanguages.ARABIC]: translationGetters.ar(),
+    [AppLanguages.ENGLISH]: translationGetters.en(),
+  };
+
   const locales = RNLocalize.getLocales();
 
   if (Array.isArray(locales)) {
@@ -50,21 +58,21 @@ export const setI18nConfig = () => {
   // If the current locale in device is not en or ar.
   i18n.defaultLocale = defaultLocale;
 
-  // Set the locale.
-  i18n.locale = defaultLocale;
-  I18nManager.allowRTL(defaultLocale === AppLanguages.ARABIC);
-  I18nManager.forceRTL(defaultLocale === AppLanguages.ARABIC);
+  // Get user language.
+  const userLanguage = await getLanguage();
 
-  // Define the supported translations.
-  i18n.translations = {
-    [AppLanguages.ARABIC]: translationGetters.ar(),
-    [AppLanguages.ENGLISH]: translationGetters.en(),
-  };
+  // Set the locale.
+  await updateLanguage(userLanguage);
 };
 
-export const updateLanguage = (language?: AppLanguages | null) => {
+export const updateLanguage = async (language?: AppLanguages | null) => {
   console.info(getLogMessage('updateLanguage'), language);
   const locale = language || defaultLocale;
+
+  // Save user language.
+  if (language) {
+    await setLanguage(language);
+  }
 
   // Clear translation cache.
   translate?.cache?.clear?.();
@@ -75,11 +83,11 @@ export const updateLanguage = (language?: AppLanguages | null) => {
   I18nManager.forceRTL(locale === AppLanguages.ARABIC);
 
   if (locale === AppLanguages.ARABIC && !I18nManager.isRTL) {
-    RNRestart.Restart();
+    setTimeout(() => RNRestart.Restart(), 500);
   }
 
   if (locale === AppLanguages.ENGLISH && I18nManager.isRTL) {
-    RNRestart.Restart();
+    setTimeout(() => RNRestart.Restart(), 500);
   }
 };
 

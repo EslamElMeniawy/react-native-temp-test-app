@@ -42,7 +42,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "postinstall": "yarn pods && yarn link-assets && yarn android-clean && yarn ios-clean && patch-package",
+    "postinstall": "patch-package && yarn pods && yarn link-assets && yarn android-clean && yarn ios-clean",
     "svg": "yarn react-native-vector-image generate",
     "reset": "react-native clean-project-auto && yarn"
   },
@@ -87,7 +87,7 @@
     "react-native-vector-image": "^0.3.3",
     "react-redux": "^8.0.5",
     "redux-logger": "^3.0.6",
-    "roqay-react-native-common-components": "^2.2.0",
+    "roqay-react-native-common-components": "^2.3.0",
     "tinycolor2": "^1.6.0"
   },
   "devDependencies": {

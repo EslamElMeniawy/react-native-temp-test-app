@@ -125,7 +125,7 @@ export default React.memo(() => {
     <Button
       text="Show Error Dialog"
       onPress={onShowErrorDialogPress}
-      textProps={{style: styles.buttonText, children: undefined}}
+      textProps={{style: styles.buttonText}}
     />
   );
 
@@ -133,7 +133,7 @@ export default React.memo(() => {
     <Button
       text="Show Loading Dialog"
       onPress={onShowLoadingDialogPress}
-      textProps={{style: styles.buttonText, children: undefined}}
+      textProps={{style: styles.buttonText}}
     />
   );
 
@@ -162,7 +162,7 @@ export default React.memo(() => {
       <Button
         text="Submit Form"
         onPress={handleSubmit(onSubmitPress)}
-        textProps={{style: styles.buttonText, children: undefined}}
+        textProps={{style: styles.buttonText}}
         style={styles.submitButton}
       />
     </>

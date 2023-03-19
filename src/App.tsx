@@ -43,7 +43,7 @@ export default React.memo(() => {
   // #endregion
 
   // #region Variables
-  let internetLostToastId: string | undefined = undefined;
+  const internetLostToastId = React.useRef<string | undefined>(undefined);
   // #endregion
 
   // #region State
@@ -67,19 +67,86 @@ export default React.memo(() => {
 
   // Localization initialization.
   React.useEffect(() => {
-    setI18nConfig();
-    setLanguageLoaded(true);
+    setI18nConfig().then(() => setLanguageLoaded(true));
   }, []);
 
   // Add listener for network state change.
   React.useEffect(() => {
+    /**
+     * handleNetworkState
+     *
+     * Save network state to redux store.
+     * Check if not internet then show connection lost toast.
+     *
+     * @param state The new network state to handle.
+     */
+    const handleNetworkState = (state: NetInfoState) => {
+      console.info(getLogMessage('handleNetworkState'));
+      console.info(getLogMessage('state'), state);
+
+      // Check Internet available state.
+      const isInternetAvailable =
+        state.isConnected && state.isInternetReachable;
+      console.info(getLogMessage('isInternetAvailable'), isInternetAvailable);
+
+      dispatch(
+        setIsInternetAvailable(
+          isInternetAvailable == null ? true : isInternetAvailable,
+        ),
+      );
+
+      // Check connection expensive state.
+      const isConnectionExpensive = state.details?.isConnectionExpensive;
+      console.info(
+        getLogMessage('isConnectionExpensive'),
+        isConnectionExpensive,
+      );
+
+      if (isConnectionExpensive === undefined) {
+        dispatch(removeIsConnectionExpensive());
+      } else {
+        dispatch(setIsConnectionExpensive(isConnectionExpensive));
+      }
+
+      // Show internet lost toast if no Internet connection available.
+      console.info(
+        getLogMessage('internetLostToastId'),
+        internetLostToastId.current,
+      );
+
+      if (isInternetAvailable === false) {
+        if (internetLostToastId.current) {
+          toast?.update(
+            internetLostToastId.current,
+            translate('internet_lost'),
+            {
+              type: 'danger',
+              onClose: () => (internetLostToastId.current = undefined),
+            },
+          );
+        } else {
+          internetLostToastId.current = toast?.show(
+            translate('internet_lost'),
+            {
+              type: 'danger',
+              onClose: () => (internetLostToastId.current = undefined),
+            },
+          );
+        }
+      } else {
+        if (internetLostToastId.current) {
+          toast?.hide(internetLostToastId.current);
+        }
+      }
+    };
+
     const subAppState = AppState.addEventListener(
       'change',
       async nextAppState => {
         console.info(getLogMessage('App state changed'));
         console.info(getLogMessage('nextAppState'), nextAppState);
 
-        if (Platform.OS == 'ios' && nextAppState == 'active') {
+        if (Platform.OS === 'ios' && nextAppState === 'active') {
           const newNetInfo = await NativeModules.RNCNetInfo.getCurrentState(
             'wifi',
           );
@@ -107,146 +174,92 @@ export default React.memo(() => {
 
       unsubscribeNetState();
     };
-  }, []);
-
-  /**
-   * handleNetworkState
-   *
-   * Save network state to redux store.
-   * Check if not internet then show connection lost toast.
-   *
-   * @param state The new network state to handle.
-   */
-  const handleNetworkState = (state: NetInfoState) => {
-    console.info(getLogMessage('handleNetworkState'));
-    console.info(getLogMessage('state'), state);
-
-    // Check Internet available state.
-    const isInternetAvailable = state.isConnected && state.isInternetReachable;
-    console.info(getLogMessage('isInternetAvailable'), isInternetAvailable);
-
-    dispatch(
-      setIsInternetAvailable(
-        isInternetAvailable == null ? true : isInternetAvailable,
-      ),
-    );
-
-    // Check connection expensive state.
-    const isConnectionExpensive = state.details?.isConnectionExpensive;
-    console.info(getLogMessage('isConnectionExpensive'), isConnectionExpensive);
-
-    if (isConnectionExpensive == undefined) {
-      dispatch(removeIsConnectionExpensive());
-    } else {
-      dispatch(setIsConnectionExpensive(isConnectionExpensive));
-    }
-
-    // Show internet lost toast if no Internet connection available.
-    console.info(getLogMessage('internetLostToastId'), internetLostToastId);
-
-    if (isInternetAvailable === false) {
-      if (internetLostToastId) {
-        toast?.update(internetLostToastId, translate('internet_lost'), {
-          type: 'danger',
-          onClose: () => (internetLostToastId = undefined),
-        });
-      } else {
-        internetLostToastId = toast?.show(translate('internet_lost'), {
-          type: 'danger',
-          onClose: () => (internetLostToastId = undefined),
-        });
-      }
-    } else {
-      if (internetLostToastId) {
-        toast?.hide(internetLostToastId);
-      }
-    }
-  };
+  }, [dispatch]);
 
   // Firebase messaging initialization.
   React.useEffect(() => {
+    /**
+     * checkMessagingAutoInitialize
+     *
+     * Check if auto initialize not enabled then enable it.
+     */
+    const checkMessagingAutoInitialize = () => {
+      console.info(getLogMessage('checkMessagingAutoInitialize'));
+
+      if (!messaging().isAutoInitEnabled) {
+        messaging().setAutoInitEnabled(true);
+      }
+    };
+
+    /**
+     * checkMessagingPermission
+     *
+     * Check if notifications permission is not granted then:
+     * - Request notifications permission.
+     */
+    const checkMessagingPermission = async () => {
+      console.info(getLogMessage('checkMessagingPermission'));
+
+      try {
+        const hasPermission = await messaging().hasPermission();
+        console.info(getLogMessage('hasPermission'), hasPermission);
+
+        if (!hasPermission) {
+          const authStatus = await messaging().requestPermission();
+          console.info(getLogMessage('authStatus'), authStatus);
+
+          const enabled =
+            authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+            authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+          console.info(getLogMessage('enabled'), enabled);
+
+          if (!enabled) {
+            console.warn(getLogMessage('Notifications Disabled'));
+          }
+        }
+      } catch (error) {
+        console.error(getLogMessage('checkMessagingPermission Error'), error);
+      }
+    };
+
+    /**
+     * createNotificationsChannels
+     *
+     * Create default and local notifications channels
+     * for delivering notifications through on Android 8+.
+     */
+    const createNotificationsChannels = () => {
+      console.info(getLogMessage('createNotificationsChannels'));
+      createNotificationsChannel(defaultChannelId);
+      createNotificationsChannel(localChannelId);
+    };
+
+    /**
+     * createNotificationsChannel
+     *
+     * Call "createChannel" from "PushNotification"
+     * to handle creating the notifications channel.
+     *
+     * @param channelId The notifications channel Id to be created.
+     */
+    const createNotificationsChannel = (channelId: string) => {
+      console.info(getLogMessage('createNotificationsChannel'), channelId);
+
+      PushNotification.createChannel(
+        {
+          channelId: channelId,
+          channelName: translate('app_name'),
+          soundName: 'default',
+        },
+        created => console.info(getLogMessage('created'), channelId, created),
+      );
+    };
+
     checkMessagingAutoInitialize();
     checkMessagingPermission();
     createNotificationsChannels();
   }, []);
-
-  /**
-   * checkMessagingAutoInitialize
-   *
-   * Check if auto initialize not enabled then enable it.
-   */
-  const checkMessagingAutoInitialize = () => {
-    console.info(getLogMessage('checkMessagingAutoInitialize'));
-
-    if (!messaging().isAutoInitEnabled) {
-      messaging().setAutoInitEnabled(true);
-    }
-  };
-
-  /**
-   * checkMessagingPermission
-   *
-   * Check if notifications permission is not granted then:
-   * - Request notifications permission.
-   */
-  const checkMessagingPermission = async () => {
-    console.info(getLogMessage('checkMessagingPermission'));
-
-    try {
-      const hasPermission = await messaging().hasPermission();
-      console.info(getLogMessage('hasPermission'), hasPermission);
-
-      if (!hasPermission) {
-        const authStatus = await messaging().requestPermission();
-        console.info(getLogMessage('authStatus'), authStatus);
-
-        const enabled =
-          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-        console.info(getLogMessage('enabled'), enabled);
-
-        if (!enabled) {
-          console.warn(getLogMessage('Notifications Disabled'));
-        }
-      }
-    } catch (error) {
-      console.error(getLogMessage('checkMessagingPermission Error'), error);
-    }
-  };
-
-  /**
-   * createNotificationsChannels
-   *
-   * Create default and local notifications channels
-   * for delivering notifications through on Android 8+.
-   */
-  const createNotificationsChannels = () => {
-    console.info(getLogMessage('createNotificationsChannels'));
-    createNotificationsChannel(defaultChannelId);
-    createNotificationsChannel(localChannelId);
-  };
-
-  /**
-   * createNotificationsChannel
-   *
-   * Call "createChannel" from "PushNotification"
-   * to handle creating the notifications channel.
-   *
-   * @param channelId The notifications channel Id to be created.
-   */
-  const createNotificationsChannel = (channelId: string) => {
-    console.info(getLogMessage('createNotificationsChannel'), channelId);
-
-    PushNotification.createChannel(
-      {
-        channelId: channelId,
-        channelName: translate('app_name'),
-        soundName: 'default',
-      },
-      created => console.info(getLogMessage('created'), channelId, created),
-    );
-  };
 
   // Foreground messages listener.
   React.useEffect(() => {
@@ -276,7 +289,7 @@ export default React.memo(() => {
     });
 
     return unsubscribe;
-  }, []);
+  }, [dispatch]);
 
   // Handle interaction with notification.
   React.useEffect(() => {
@@ -322,7 +335,7 @@ export default React.memo(() => {
             <NavigationContainer />
             <ErrorDialog />
             <LoadingDialog />
-            <Toast reference={ref => (global['toast'] = ref)} />
+            <Toast reference={ref => (toast = ref)} />
           </PaperProvider>
         )}
       </View>

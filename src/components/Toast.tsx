@@ -1,6 +1,6 @@
 import React from 'react';
 import Toast from 'react-native-toast-notifications';
-import {Platform, View} from 'react-native';
+import {View} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import {Text, getStatusBarHeight} from 'roqay-react-native-common-components';
 import tinyColor from 'tinycolor2';
@@ -18,10 +18,10 @@ export default React.memo((props: Props) => {
     <Toast
       ref={reference}
       placement="top"
-      offset={Platform.OS == 'ios' ? getStatusBarHeight() : undefined}
+      offset={getStatusBarHeight()}
       renderToast={toastOptions => {
         const indicatorColor = tinyColor(
-          toastOptions.type == 'danger' ? AppColors.ERROR : AppColors.PRIMARY,
+          toastOptions.type === 'danger' ? AppColors.ERROR : AppColors.PRIMARY,
         );
 
         const borderColor = indicatorColor.clone();

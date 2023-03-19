@@ -60,6 +60,31 @@ const getMap = async (key: LocalStorageKeys) => {
   }
 };
 
+const setBoolean = async (key: LocalStorageKeys, value: boolean) => {
+  console.info(getLogMessage('setBoolean'), key, value);
+
+  try {
+    const result = await MMKV.setBoolAsync(key, value);
+    console.info(getLogMessage('result'), result);
+    return result;
+  } catch (e) {
+    console.error(getLogMessage('Error setBoolean'), key, value, e);
+    return null;
+  }
+};
+
+const getBoolean = async (key: LocalStorageKeys) => {
+  console.info(getLogMessage('getBoolean'), key);
+
+  try {
+    const bool = await MMKV.getBoolAsync(key);
+    return bool;
+  } catch (e) {
+    console.error(getLogMessage('Error getBoolean'), key, e);
+    return null;
+  }
+};
+
 const setInt = async (key: LocalStorageKeys, value: number) => {
   console.info(getLogMessage('setInt'), key, value);
 
@@ -77,8 +102,8 @@ const getInt = async (key: LocalStorageKeys) => {
   console.info(getLogMessage('getInt'), key);
 
   try {
-    const string = await MMKV.getIntAsync(key);
-    return string;
+    const int = await MMKV.getIntAsync(key);
+    return int;
   } catch (e) {
     console.error(getLogMessage('Error getInt'), key, e);
     return null;
@@ -94,7 +119,7 @@ export const getLanguage = async () => {
   console.info(getLogMessage('getLanguage'));
   const language = await getString(LocalStorageKeys.LANGUAGE);
   console.info(getLogMessage('language'), language);
-  return Boolean(language) ? (language as AppLanguages) : null;
+  return language ? (language as AppLanguages) : null;
 };
 
 export const setLanguage = async (language: AppLanguages) => {
@@ -108,7 +133,7 @@ export const getUser = async () => {
   console.info(getLogMessage('getUser'));
   const user = await getMap(LocalStorageKeys.USER);
   console.info(getLogMessage('user'), user);
-  return Boolean(user) ? (user as User) : null;
+  return user ? (user as User) : null;
 };
 
 export const setUser = async (user: User) => {
