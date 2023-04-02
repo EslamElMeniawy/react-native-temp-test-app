@@ -1,6 +1,6 @@
 {
   "name": "MyApp",
-  "version": "1.0.0",
+  "version": "0.0.1-test.0",
   "private": true,
   "scripts": {
     "link-assets": "react-native-asset",
@@ -44,6 +44,8 @@
     "lint": "eslint .",
     "prepare": "husky install",
     "postinstall": "patch-package && yarn pods && yarn link-assets && yarn android-clean && yarn ios-clean",
+    "ver:test": "yarn version --prerelease --preid test && react-native-version --amend --never-increment-build",
+    "ver": "yarn version && react-native-version --amend",
     "svg": "yarn react-native-vector-image generate",
     "reset": "react-native clean-project-auto && yarn"
   },
