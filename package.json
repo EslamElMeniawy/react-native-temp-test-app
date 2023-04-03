@@ -45,7 +45,7 @@
     "prepare": "husky install",
     "postinstall": "patch-package && yarn pods && yarn link-assets && yarn android-clean && yarn ios-clean",
     "ver:test": "yarn version --prerelease --preid alpha && react-native-version --amend --never-increment-build",
-    "ver": "yarn version && react-native-version --amend",
+    "ver": "yarn version && react-native-version --amend --reset-build",
     "svg": "yarn react-native-vector-image generate",
     "reset": "react-native clean-project-auto && yarn"
   },
