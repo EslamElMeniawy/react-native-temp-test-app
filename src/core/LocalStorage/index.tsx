@@ -60,55 +60,55 @@ const getMap = async (key: LocalStorageKeys) => {
   }
 };
 
-const setBoolean = async (key: LocalStorageKeys, value: boolean) => {
-  console.info(getLogMessage('setBoolean'), key, value);
+// const setBoolean = async (key: LocalStorageKeys, value: boolean) => {
+//   console.info(getLogMessage('setBoolean'), key, value);
 
-  try {
-    const result = await MMKV.setBoolAsync(key, value);
-    console.info(getLogMessage('result'), result);
-    return result;
-  } catch (e) {
-    console.error(getLogMessage('Error setBoolean'), key, value, e);
-    return null;
-  }
-};
+//   try {
+//     const result = await MMKV.setBoolAsync(key, value);
+//     console.info(getLogMessage('result'), result);
+//     return result;
+//   } catch (e) {
+//     console.error(getLogMessage('Error setBoolean'), key, value, e);
+//     return null;
+//   }
+// };
 
-const getBoolean = async (key: LocalStorageKeys) => {
-  console.info(getLogMessage('getBoolean'), key);
+// const getBoolean = async (key: LocalStorageKeys) => {
+//   console.info(getLogMessage('getBoolean'), key);
 
-  try {
-    const bool = await MMKV.getBoolAsync(key);
-    return bool;
-  } catch (e) {
-    console.error(getLogMessage('Error getBoolean'), key, e);
-    return null;
-  }
-};
+//   try {
+//     const bool = await MMKV.getBoolAsync(key);
+//     return bool;
+//   } catch (e) {
+//     console.error(getLogMessage('Error getBoolean'), key, e);
+//     return null;
+//   }
+// };
 
-const setInt = async (key: LocalStorageKeys, value: number) => {
-  console.info(getLogMessage('setInt'), key, value);
+// const setInt = async (key: LocalStorageKeys, value: number) => {
+//   console.info(getLogMessage('setInt'), key, value);
 
-  try {
-    const result = await MMKV.setIntAsync(key, value);
-    console.info(getLogMessage('result'), result);
-    return result;
-  } catch (e) {
-    console.error(getLogMessage('Error setInt'), key, value, e);
-    return null;
-  }
-};
+//   try {
+//     const result = await MMKV.setIntAsync(key, value);
+//     console.info(getLogMessage('result'), result);
+//     return result;
+//   } catch (e) {
+//     console.error(getLogMessage('Error setInt'), key, value, e);
+//     return null;
+//   }
+// };
 
-const getInt = async (key: LocalStorageKeys) => {
-  console.info(getLogMessage('getInt'), key);
+// const getInt = async (key: LocalStorageKeys) => {
+//   console.info(getLogMessage('getInt'), key);
 
-  try {
-    const int = await MMKV.getIntAsync(key);
-    return int;
-  } catch (e) {
-    console.error(getLogMessage('Error getInt'), key, e);
-    return null;
-  }
-};
+//   try {
+//     const int = await MMKV.getIntAsync(key);
+//     return int;
+//   } catch (e) {
+//     console.error(getLogMessage('Error getInt'), key, e);
+//     return null;
+//   }
+// };
 
 const removeItem = (key: LocalStorageKeys) => {
   console.info(getLogMessage('removeItem'), key);

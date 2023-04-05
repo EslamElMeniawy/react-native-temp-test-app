@@ -5,7 +5,7 @@ import {FirebaseMessagingTypes} from '@react-native-firebase/messaging';
 import {getBundleId} from 'react-native-device-info';
 
 import {Notification} from '../types';
-import {store, setUser as setStateUser, notificationsApi} from '../store';
+import {store, setUser as setStateUser /*notificationsApi*/} from '../store';
 import {AppColors} from '../enums';
 
 const getLogMessage = (message: string) => {

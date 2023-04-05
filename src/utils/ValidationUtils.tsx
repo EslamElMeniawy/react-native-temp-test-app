@@ -1,4 +1,5 @@
-export const emailRegExp = /^\w+([.-]?\w+)*@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/g;
+export const emailRegExp =
+  /^\w+([.-]?\w+)*@[a-zA-Z_]+?(.[a-zA-Z]{2,3}|.[a-zA-Z]{2,3}.[a-zA-Z]{2,3})$/g;
 
 /**
  * Password Rules:
