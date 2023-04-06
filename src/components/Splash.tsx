@@ -1,6 +1,12 @@
 import React from 'react';
 import {ScaledSheet} from 'react-native-size-matters';
-import {Text, Button, TextInput} from 'roqay-react-native-common-components';
+import {
+  Text,
+  Button,
+  TextInput,
+  emailRegExp,
+  strictPasswordRegExp,
+} from 'roqay-react-native-common-components';
 import Config from 'react-native-config';
 import {useDispatch, useSelector} from 'react-redux';
 import {View, Keyboard} from 'react-native';
@@ -14,7 +20,6 @@ import {
   removeLoadingDialog,
 } from 'store';
 import {translate} from 'core';
-import {emailRegExp, passwordRegExp} from 'utils';
 
 import ScrollView from './ScrollView';
 
@@ -214,7 +219,7 @@ export default React.memo(() => {
           message: 'Field is required',
         },
         pattern: {
-          value: passwordRegExp,
+          value: strictPasswordRegExp,
           message: 'Invalid password',
         },
       }}
