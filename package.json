@@ -53,10 +53,10 @@
     "@klarna/react-native-vector-drawable": "^0.4.0",
     "@react-native-community/netinfo": "^9.3.8",
     "@react-native-community/push-notification-ios": "^1.11.0",
-    "@react-native-firebase/analytics": "^17.4.1",
-    "@react-native-firebase/app": "^17.4.1",
-    "@react-native-firebase/crashlytics": "^17.4.1",
-    "@react-native-firebase/messaging": "^17.4.1",
+    "@react-native-firebase/analytics": "^17.4.2",
+    "@react-native-firebase/app": "^17.4.2",
+    "@react-native-firebase/crashlytics": "^17.4.2",
+    "@react-native-firebase/messaging": "^17.4.2",
     "@react-native-masked-view/masked-view": "^0.2.9",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
@@ -90,7 +90,7 @@
     "react-native-vector-image": "^0.4.0",
     "react-redux": "^8.0.5",
     "redux-logger": "^3.0.6",
-    "roqay-react-native-common-components": "^2.3.0",
+    "roqay-react-native-common-components": "^2.4.0",
     "tinycolor2": "^1.6.0"
   },
   "devDependencies": {
