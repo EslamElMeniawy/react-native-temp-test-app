@@ -1,8 +1,8 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import Config from 'react-native-config';
 
-import {type RootState} from '../../store';
-import {getCurrentLocale} from '../../core';
+import {type RootState} from 'store';
+import {getCurrentLocale} from 'core';
 
 // normalTimeout 1 min.
 // Used for all requests.

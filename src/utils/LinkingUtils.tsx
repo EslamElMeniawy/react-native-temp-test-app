@@ -1,6 +1,6 @@
 import {Linking} from 'react-native';
 
-import {translate} from '../core';
+import {translate} from 'core';
 
 const getLogMessage = (message: string) => {
   return `## LinkingUtils: ${message}`;

@@ -5,7 +5,7 @@ import {ScaledSheet} from 'react-native-size-matters';
 import {Text, getStatusBarHeight} from 'roqay-react-native-common-components';
 import tinyColor from 'tinycolor2';
 
-import {AppColors} from '../enums';
+import {AppColors} from 'enums';
 
 interface Props {
   reference?: React.LegacyRef<Toast>;

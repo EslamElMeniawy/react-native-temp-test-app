@@ -1,4 +1,4 @@
-import {User} from '../../types';
+import {User} from 'types';
 
 export const userResponseToUser = (userResponse: any): User => ({
   // TODO: Change this mapping based on API response.

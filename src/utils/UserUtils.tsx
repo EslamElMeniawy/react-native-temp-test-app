@@ -3,16 +3,16 @@ import messaging from '@react-native-firebase/messaging';
 import {
   setUser as setLocalStorageUser,
   removeUser as removeLocalStorageUser,
-} from '../core';
+} from 'core';
 import {
   store,
   setUser as setStateUser,
   removeUser as removeStateUser,
   api,
   setErrorDialogMessage,
-} from '../store';
-import {reset} from '../navigation';
-import {User} from '../types';
+} from 'store';
+import {reset} from 'navigation';
+import {User} from 'types';
 
 const getLogMessage = (message: string) => {
   return `## UserUtils: ${message}`;

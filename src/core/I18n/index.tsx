@@ -4,7 +4,7 @@ import * as RNLocalize from 'react-native-localize';
 import RNRestart from 'react-native-restart';
 import memoize from 'lodash.memoize';
 
-import {AppLanguages} from '../../enums';
+import {AppLanguages} from 'enums';
 import {getLanguage, setLanguage} from '../LocalStorage';
 
 const getLogMessage = (message: string) => {

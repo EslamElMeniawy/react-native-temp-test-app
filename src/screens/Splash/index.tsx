@@ -3,25 +3,25 @@ import {useDispatch, useSelector} from 'react-redux';
 import RNBootSplash from 'react-native-bootsplash';
 import {Animated, Dimensions, StyleSheet} from 'react-native';
 
+import styles from './styles';
 import {
   type RootState,
   setUser as setStateUser,
   getUserApi,
   removeUser as removeStateUser,
-} from '../../store';
-import styles from './styles';
+} from 'store';
 import {
   getLanguage,
   updateLanguage,
   getUser as getLocalStorageUser,
   setUser as setLocalStorageUser,
   removeUser as removeLocalStorageUser,
-} from '../../core';
-import type {RootStackScreenProps, User} from '../../types';
-import {AppImages} from '../../enums';
-import {isErrorWithStatus} from '../../utils';
+} from 'core';
+import type {RootStackScreenProps, User} from 'types';
+import {AppImages} from 'enums';
+import {isErrorWithStatus} from 'utils';
 
-import {Screen, Splash} from '../../components';
+import {Screen, Splash} from 'components';
 
 export default React.memo((props: RootStackScreenProps<'Splash'>) => {
   // #region Logger

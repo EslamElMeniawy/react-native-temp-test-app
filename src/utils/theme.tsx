@@ -10,7 +10,7 @@ import type {
 import {Platform} from 'react-native';
 import tinyColor from 'tinycolor2';
 
-import {AppColors} from '../enums';
+import {AppColors} from 'enums';
 
 const colors: MD3Colors = {
   ...DefaultTheme.colors,

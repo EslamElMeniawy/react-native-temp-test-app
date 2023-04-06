@@ -12,9 +12,9 @@ import {
   setErrorDialogTitleMessage,
   showLoadingDialog,
   removeLoadingDialog,
-} from '../store';
-import {translate} from '../core';
-import {emailRegExp, passwordRegExp} from '../utils';
+} from 'store';
+import {translate} from 'core';
+import {emailRegExp, passwordRegExp} from 'utils';
 
 import ScrollView from './ScrollView';
 

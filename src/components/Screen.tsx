@@ -14,7 +14,7 @@ import {
   NavigationBarProps,
 } from 'react-native-bars';
 
-import {AppColors} from '../enums';
+import {AppColors} from 'enums';
 
 interface Props {
   edges?: Edge[];

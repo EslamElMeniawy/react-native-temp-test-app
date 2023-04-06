@@ -1,8 +1,8 @@
 import type {FetchBaseQueryError} from '@reduxjs/toolkit/query';
 import type {SerializedError} from '@reduxjs/toolkit';
 
-import {store, setErrorDialogMessage} from '../store';
-import {translate} from '../core';
+import {store, setErrorDialogMessage} from 'store';
+import {translate} from 'core';
 
 const getLogMessage = (message: string) => {
   return `## ErrorHandlingUtils: ${message}`;

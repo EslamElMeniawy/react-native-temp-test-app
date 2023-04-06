@@ -1,6 +1,6 @@
 import {ScaledSheet} from 'react-native-size-matters';
 
-import {AppColors} from '../../enums';
+import {AppColors} from 'enums';
 
 const styles = ScaledSheet.create({
   bootSplash: {

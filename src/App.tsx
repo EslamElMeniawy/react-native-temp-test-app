@@ -11,25 +11,25 @@ import {getApplicationName} from 'react-native-device-info';
 import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
-import {AppColors} from './enums';
+import {AppColors} from 'enums';
 import {
   defaultChannelId,
   displayLocalNotification,
   localChannelId,
   paperTheme,
   processNotification,
-} from './utils';
-import {setI18nConfig, translate, getUser} from './core';
+} from 'utils';
+import {setI18nConfig, translate, getUser} from 'core';
 import {
   setUser as setStateUser,
   setIsInternetAvailable,
   setIsConnectionExpensive,
   removeIsConnectionExpensive,
-} from './store';
-import {Notification} from './types';
+} from 'store';
+import {Notification} from 'types';
 
-import {NavigationContainer} from './navigation';
-import {ErrorDialog, LoadingDialog, Toast} from './components';
+import {NavigationContainer} from 'navigation';
+import {ErrorDialog, LoadingDialog, Toast} from 'components';
 
 export default React.memo(() => {
   // #region Logger

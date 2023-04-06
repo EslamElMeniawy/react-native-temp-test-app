@@ -1,10 +1,10 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import type {RootStackParamList} from '../types';
+import type {RootStackParamList} from 'types';
 
 // Screens.
-import Splash from '../screens/Splash';
+import Splash from 'screens/Splash';
 
 // Navigators.
 // TODO: Add navigators imports here.
