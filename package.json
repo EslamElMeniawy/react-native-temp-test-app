@@ -40,13 +40,14 @@
     "ios:staging-release": "react-native run-ios --simulator=\"iPhone 14 Pro Max\" --scheme \"Staging\" --configuration Release",
     "ios:prod-release": "react-native run-ios --simulator=\"iPhone 14 Pro Max\" --scheme \"Release\" --configuration Release",
     "start": "react-native start",
+    "start-reset": "react-native start --reset-cache",
     "test": "jest",
     "lint": "eslint .",
     "prepare": "husky install",
     "postinstall": "patch-package && yarn pods && yarn link-assets && yarn android-clean && yarn ios-clean",
     "ver:test": "yarn version --prerelease --preid alpha && react-native-version --amend --never-increment-build",
     "ver": "yarn version && react-native-version --amend --reset-build",
-    "svg": "yarn react-native-vector-image generate",
+    "svg": "react-native-vector-image generate",
     "reset": "react-native clean-project-auto && yarn"
   },
   "dependencies": {
