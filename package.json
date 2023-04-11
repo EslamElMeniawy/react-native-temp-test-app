@@ -64,7 +64,6 @@
     "@reduxjs/toolkit": "^1.9.3",
     "i18n-js": "^4.2.3",
     "lodash.memoize": "^4.1.2",
-    "postinstall-postinstall": "^2.1.0",
     "react": "18.2.0",
     "react-hook-form": "^7.43.9",
     "react-native": "0.71.6",
@@ -120,6 +119,7 @@
     "lint-staged": "^13.2.0",
     "metro-react-native-babel-preset": "0.73.9",
     "patch-package": "^6.5.1",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.8.7",
     "react-native-clean-project": "^4.0.1",
     "react-native-version": "^4.0.0",
@@ -132,9 +132,7 @@
     "preset": "react-native"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json}": [
-      "prettier src --write",
-      "eslint src --fix"
-    ]
+    "src/**/*.{js,jsx,ts,tsx,json}": "prettier src --write",
+    "src/**/*.{js,jsx,ts,tsx}": "eslint src --fix"
   }
 }
