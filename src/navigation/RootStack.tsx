@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import type {RootStackParamList} from 'types';
 
@@ -12,7 +12,7 @@ import Splash from 'screens/Splash';
 // Modals.
 // TODO: Add modals imports here.
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default React.memo(() => {
   return (
