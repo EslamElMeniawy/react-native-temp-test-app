@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScaledSheet} from 'react-native-size-matters';
 import {
+  ScrollView,
   Text,
   Button,
   TextInput,
@@ -20,8 +21,6 @@ import {
   removeLoadingDialog,
 } from 'store';
 import {translate} from 'core';
-
-import ScrollView from './ScrollView';
 
 // TODO: Remove all this temp explanation code.
 export default React.memo(() => {
