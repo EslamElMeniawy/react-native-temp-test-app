@@ -109,13 +109,16 @@ export default React.memo(() => {
   );
 
   const getScreenTitle = () => (
-    <Text type="bold" style={styles.content}>
+    <Text variant="displaySmall" style={styles.content}>
       Splash Screen
     </Text>
   );
 
   const getEnvironmentText = () => (
-    <Text style={styles.content}>{`Environment: ${Config.ENV_NAME}`}</Text>
+    <Text type="bold" size={13} style={styles.content}>
+      {'Environment: '}
+      <Text>{Config.ENV_NAME}</Text>
+    </Text>
   );
 
   const getDialogButtonsRow = () => (
@@ -149,14 +152,16 @@ export default React.memo(() => {
   );
 
   const getInternetAvailableText = () => (
-    <Text style={styles.rowText}>
-      {`Internet Available: ${isInternetAvailable}`}
+    <Text type="bold" size={13} style={styles.rowText}>
+      {'Internet Available: '}
+      <Text>{`${isInternetAvailable}`}</Text>
     </Text>
   );
 
   const getConnectionExpensiveText = () => (
-    <Text style={styles.rowText}>
-      {`Connection Expensive: ${isConnectionExpensive}`}
+    <Text type="bold" size={13} style={styles.rowText}>
+      {'Connection Expensive: '}
+      <Text>{`${isConnectionExpensive}`}</Text>
     </Text>
   );
 
