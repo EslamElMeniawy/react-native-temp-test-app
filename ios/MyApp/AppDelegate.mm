@@ -33,25 +33,12 @@
 
   // Initialize splash screen.
   [RNBootSplash initWithStoryboard:@"BootSplash" rootView:self.window.rootViewController.view];
-
-  // Added for 'react-native-screens'
-  #if !TARGET_OS_TV
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-  #endif
   
   // Define UNUserNotificationCenter
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
-}
-
-// Added for 'react-native-screens'
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-  #if !TARGET_OS_TV
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
-  #endif
 }
 
 // Added for 'react-native-orientation-locker'.
