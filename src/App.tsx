@@ -1,5 +1,11 @@
 import React from 'react';
-import {AppState, NativeModules, Platform, View} from 'react-native';
+import {
+  AppState,
+  NativeModules,
+  Platform,
+  PermissionsAndroid,
+  View,
+} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {ScaledSheet} from 'react-native-size-matters';
 import {configureLog} from 'roqay-react-native-common-components';
@@ -201,6 +207,15 @@ export default React.memo(() => {
       console.info(getLogMessage('checkMessagingPermission'));
 
       try {
+        const androidPermissionStatus = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+        );
+
+        console.info(
+          getLogMessage('androidPermissionStatus'),
+          androidPermissionStatus,
+        );
+
         const hasPermission = await messaging().hasPermission();
         console.info(getLogMessage('hasPermission'), hasPermission);
 
