@@ -16,6 +16,8 @@ import {Provider as ReduxProvider, useDispatch} from 'react-redux';
 import {getApplicationName} from 'react-native-device-info';
 import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {withErrorBoundary} from 'react-error-boundary';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import {AppColors} from 'enums';
 import {
@@ -36,9 +38,9 @@ import {
 import {Notification} from 'types';
 
 import {NavigationContainer} from 'navigation';
-import {ErrorDialog, LoadingDialog, Toast} from 'components';
+import {ErrorDialog, LoadingDialog, Toast, ErrorFallbackView} from 'components';
 
-const App = React.memo(() => {
+const AppContent = React.memo(() => {
   // #region Logger
   const getLogMessage = (message: string) => {
     return `## App: ${message}`;
@@ -356,15 +358,35 @@ const App = React.memo(() => {
   // #endregion
 });
 
-export default React.memo(() => (
+const App = React.memo(() => (
   <GestureHandlerRootView style={styles.gestureHandlerRoot}>
     <View style={styles.appContainer}>
       <ReduxProvider store={store}>
-        <App />
+        <AppContent />
       </ReduxProvider>
     </View>
   </GestureHandlerRootView>
 ));
+
+const AppWithErrorBoundary = withErrorBoundary(App, {
+  fallback: <ErrorFallbackView />,
+  onError(error, info) {
+    console.error('ErrorBoundary::onError', error, info);
+
+    // Log error to Firebase.
+    if (Config.ENABLE_FIREBASE_LOG) {
+      crashlytics().recordError(
+        new Error(
+          `## ERROR ## Message: ErrorBoundary::onError ## Data: ${JSON.stringify(
+            {error, info},
+          )}`,
+        ),
+      );
+    }
+  },
+});
+
+export default AppWithErrorBoundary;
 
 const styles = ScaledSheet.create({
   gestureHandlerRoot: {
