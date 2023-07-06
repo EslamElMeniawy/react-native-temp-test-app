@@ -12,7 +12,7 @@ import {configureLog} from 'roqay-react-native-common-components';
 import Config from 'react-native-config';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
-import {useDispatch} from 'react-redux';
+import {Provider as ReduxProvider, useDispatch} from 'react-redux';
 import {getApplicationName} from 'react-native-device-info';
 import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -27,6 +27,7 @@ import {
 } from 'utils';
 import {setI18nConfig, translate, getUser} from 'core';
 import {
+  store,
   setUser as setStateUser,
   setIsInternetAvailable,
   setIsConnectionExpensive,
@@ -37,7 +38,7 @@ import {Notification} from 'types';
 import {NavigationContainer} from 'navigation';
 import {ErrorDialog, LoadingDialog, Toast} from 'components';
 
-export default React.memo(() => {
+const App = React.memo(() => {
   // #region Logger
   const getLogMessage = (message: string) => {
     return `## App: ${message}`;
@@ -207,14 +208,16 @@ export default React.memo(() => {
       console.info(getLogMessage('checkMessagingPermission'));
 
       try {
-        const androidPermissionStatus = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-        );
+        if (Platform.OS === 'android') {
+          const androidPermissionStatus = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+          );
 
-        console.info(
-          getLogMessage('androidPermissionStatus'),
-          androidPermissionStatus,
-        );
+          console.info(
+            getLogMessage('androidPermissionStatus'),
+            androidPermissionStatus,
+          );
+        }
 
         const hasPermission = await messaging().hasPermission();
         console.info(getLogMessage('hasPermission'), hasPermission);
@@ -342,22 +345,26 @@ export default React.memo(() => {
   // #endregion
 
   // #region UI
-  return (
-    <GestureHandlerRootView style={styles.gestureHandlerRoot}>
-      <View style={styles.appContainer}>
-        {languageLoaded && (
-          <PaperProvider theme={paperTheme}>
-            <NavigationContainer />
-            <ErrorDialog />
-            <LoadingDialog />
-            <Toast reference={ref => (toast = ref)} />
-          </PaperProvider>
-        )}
-      </View>
-    </GestureHandlerRootView>
-  );
+  return languageLoaded ? (
+    <PaperProvider theme={paperTheme}>
+      <NavigationContainer />
+      <ErrorDialog />
+      <LoadingDialog />
+      <Toast reference={ref => (toast = ref)} />
+    </PaperProvider>
+  ) : undefined;
   // #endregion
 });
+
+export default React.memo(() => (
+  <GestureHandlerRootView style={styles.gestureHandlerRoot}>
+    <View style={styles.appContainer}>
+      <ReduxProvider store={store}>
+        <App />
+      </ReduxProvider>
+    </View>
+  </GestureHandlerRootView>
+));
 
 const styles = ScaledSheet.create({
   gestureHandlerRoot: {

@@ -6,13 +6,11 @@ import 'react-native-gesture-handler';
 import {enableScreens} from 'react-native-screens';
 import React from 'react';
 import {AppRegistry} from 'react-native';
-import {Provider as ReduxProvider} from 'react-redux';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 import {name as appName} from './app.json';
-import {store} from './src/store';
 import {processNotification} from './src/utils';
 
 import App from './src/App';
@@ -52,11 +50,7 @@ function HeadlessCheck({isHeadless}) {
     return null;
   }
 
-  return (
-    <ReduxProvider store={store}>
-      <App />
-    </ReduxProvider>
-  );
+  return <App />;
 }
 
 AppRegistry.registerComponent(appName, () => HeadlessCheck);
