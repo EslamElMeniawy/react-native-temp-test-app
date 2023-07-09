@@ -434,7 +434,7 @@ PODS:
     - React-Core
   - react-native-restart (0.0.27):
     - React-Core
-  - react-native-safe-area-context (4.6.3):
+  - react-native-safe-area-context (4.6.4):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
@@ -550,7 +550,7 @@ PODS:
     - React-jsi (= 0.72.1)
     - React-logger (= 0.72.1)
     - React-perflogger (= 0.72.1)
-  - RNBootSplash (4.7.4):
+  - RNBootSplash (4.7.5):
     - React-Core
   - RNCMaskedView (0.2.9):
     - React-Core
@@ -583,10 +583,10 @@ PODS:
     - React-Core
   - RNLocalize (3.0.2):
     - React-Core
-  - RNScreens (3.22.0):
+  - RNScreens (3.22.1):
     - React-Core
     - React-RCTImage
-  - RNSVG (13.9.0):
+  - RNSVG (13.10.0):
     - React-Core
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
@@ -851,7 +851,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: fefd4e98d75cbdd6e85fc530f7111a8afdf2b0c5
   react-native-orientation-locker: 851f6510d8046ea2f14aa169b1e01fcd309a94ba
   react-native-restart: 7595693413fe3ca15893702f2c8306c62a708162
-  react-native-safe-area-context: 36cc67648134e89465663b8172336a19eeda493d
+  react-native-safe-area-context: 68b07eabfb0d14547d36f6929c0e98d818064f02
   React-NativeModulesApple: bdfd86e972ea8103941faab9c7f64ea9be7e2be6
   React-perflogger: 3d501f34c8d4b10cb75f348e43591765788525ad
   React-RCTActionSheet: f5335572c979198c0c3daff67b07bd1ad8370c1d
@@ -869,7 +869,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 34e27d6db52587cf93e7d9d44d5ff2dc4948243a
   React-utils: 4324c58d17bcbcb8c49fe7f8c14b4f61d5dd4a42
   ReactCommon: e33f60179aae29423fcf4ea19fdedc038813ea3f
-  RNBootSplash: 0a92fb6bd3d265e23cded61faf3e9fda441d0a6b
+  RNBootSplash: 85f6b879c080e958afdb4c62ee04497b05fd7552
   RNCMaskedView: 949696f25ec596bfc697fc88e6f95cf0c79669b6
   RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
   RNDeviceInfo: 25d818c85db769cc0e7083d39efaa01a6f450df3
@@ -880,8 +880,8 @@ SPEC CHECKSUMS:
   RNFBMessaging: 3aca7a5b3b1f79a9ee75026662ea57693436a338
   RNGestureHandler: dec4645026e7401a0899f2846d864403478ff6a5
   RNLocalize: dbea38dcb344bf80ff18a1757b1becf11f70cae4
-  RNScreens: 68fd1060f57dd1023880bf4c05d74784b5392789
-  RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
+  RNScreens: 50ffe2fa2342eabb2d0afbe19f7c1af286bc7fb3
+  RNSVG: 80584470ff1ffc7994923ea135a3e5ad825546b9
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
