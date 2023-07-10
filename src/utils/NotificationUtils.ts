@@ -1,10 +1,10 @@
 import {Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import {FirebaseMessagingTypes} from '@react-native-firebase/messaging';
+import type {FirebaseMessagingTypes} from '@react-native-firebase/messaging';
 import {getBundleId} from 'react-native-device-info';
 
-import {Notification} from 'types';
+import type {Notification} from 'types';
 import {store, setUser as setStateUser /*notificationsApi*/} from 'store';
 import {AppColors} from 'enums';
 

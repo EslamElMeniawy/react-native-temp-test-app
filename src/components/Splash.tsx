@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScaledSheet} from 'react-native-size-matters';
+import {ScaledSheet, vs, s} from 'react-native-size-matters';
 import {
   ScrollView,
   Text,
@@ -275,10 +275,10 @@ const styles = ScaledSheet.create({
   content: {
     alignSelf: 'center',
     textAlign: 'center',
-    marginTop: '16@vs',
+    marginTop: vs(16),
   },
   buttonText: {
-    paddingHorizontal: '16@s',
+    paddingHorizontal: s(16),
   },
   row: {
     width: '90%',
@@ -286,7 +286,7 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: '16@vs',
+    marginTop: vs(16),
   },
   rowText: {
     textAlign: 'center',
@@ -294,11 +294,11 @@ const styles = ScaledSheet.create({
   input: {
     width: '90%',
     alignSelf: 'center',
-    marginTop: '16@vs',
+    marginTop: vs(16),
   },
   submitButton: {
     width: '90%',
     alignSelf: 'center',
-    marginTop: '16@vs',
+    marginTop: vs(16),
   },
 });

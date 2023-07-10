@@ -1,4 +1,4 @@
-import {PagingResponse, Notification} from 'types';
+import type {PagingResponse, Notification} from 'types';
 
 export const notificationsResponseToPaging = (
   notificationsResponse: any,

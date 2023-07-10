@@ -1,5 +1,5 @@
 import {api} from './baseApi';
-import {ApiRequest, PagingResponse, Notification} from 'types';
+import type {ApiRequest, PagingResponse, Notification} from 'types';
 import {notificationsResponseToPaging} from 'utils';
 
 export const notificationsApi = api.injectEndpoints({

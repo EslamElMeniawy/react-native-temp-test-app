@@ -35,7 +35,7 @@ import {
   setIsConnectionExpensive,
   removeIsConnectionExpensive,
 } from 'store';
-import {Notification} from 'types';
+import type {Notification} from 'types';
 
 import {NavigationContainer} from 'navigation';
 import {ErrorDialog, LoadingDialog, Toast, ErrorFallbackView} from 'components';

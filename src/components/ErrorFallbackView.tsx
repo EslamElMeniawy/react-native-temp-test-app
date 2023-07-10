@@ -2,7 +2,7 @@ import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Text, Button} from 'roqay-react-native-common-components';
 import RNRestart from 'react-native-restart';
-import {ScaledSheet} from 'react-native-size-matters';
+import {ScaledSheet, vs} from 'react-native-size-matters';
 import RNBootSplash from 'react-native-bootsplash';
 
 import {translate} from 'core';
@@ -38,7 +38,7 @@ export default React.memo(() => {
 const styles = ScaledSheet.create({
   container: {
     justifyContent: 'center',
-    paddingVertical: '16@vs',
+    paddingVertical: vs(16),
   },
   text: {
     color: AppColors.ON_BACKGROUND,
@@ -57,7 +57,7 @@ const styles = ScaledSheet.create({
   bt: {
     width: '90%',
     alignSelf: 'center',
-    marginTop: '32@vs',
+    marginTop: vs(32),
     backgroundColor: AppColors.PRIMARY,
   },
   btnTxt: {

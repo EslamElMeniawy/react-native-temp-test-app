@@ -12,7 +12,7 @@ import {
   setErrorDialogMessage,
 } from 'store';
 import {reset} from 'navigation';
-import {User} from 'types';
+import type {User} from 'types';
 
 const getLogMessage = (message: string) => {
   return `## UserUtils: ${message}`;

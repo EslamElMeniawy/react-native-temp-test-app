@@ -1,7 +1,7 @@
 import React from 'react';
 import Toast from 'react-native-toast-notifications';
 import {View} from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
+import {ScaledSheet, ms} from 'react-native-size-matters';
 import {Text, getStatusBarHeight} from 'roqay-react-native-common-components';
 import tinyColor from 'tinycolor2';
 
@@ -46,14 +46,14 @@ export default React.memo((props: Props) => {
 
 const styles = ScaledSheet.create({
   container: {
-    borderRadius: '8@msr',
-    borderWidth: '1@msr',
+    borderRadius: ms(8),
+    borderWidth: ms(1),
     overflow: 'hidden',
     backgroundColor: AppColors.SURFACE,
-    borderStartWidth: '8@msr',
+    borderStartWidth: ms(8),
   },
   text: {
-    margin: '8@msr',
+    margin: ms(8),
     color: AppColors.ON_SURFACE,
   },
 });

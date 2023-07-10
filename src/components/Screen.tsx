@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleProp, ViewStyle, View} from 'react-native';
+import {type StyleProp, type ViewStyle, View} from 'react-native';
 import {
   Edge,
   SafeAreaProvider,
@@ -10,8 +10,8 @@ import tinyColor from 'tinycolor2';
 import {
   StatusBar,
   NavigationBar,
-  StatusBarProps,
-  NavigationBarProps,
+  type StatusBarProps,
+  type NavigationBarProps,
 } from 'react-native-bars';
 
 import {AppColors} from 'enums';
